@@ -29,7 +29,7 @@ function newBoard() {
         this.arrValue = engine.getNewMatrix();
         this.applyMatrix();
         this.saveGame();
-        var style = "level" + newLevel;
+        var style = ["level" , Math.floor(Math.random() * 9) + 1].join('');
         document.body.setAttribute("class", style);
         repaint("txtLevel", [this.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);

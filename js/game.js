@@ -10,7 +10,7 @@ var cols = 16;
 var rows = 9;
 var offsetTop = -26;//header height
 var offsetLeft = 0;
-var maxLevel = 9;
+var maxLevel = 40;
 var winScore = 720;
 var scoreCount = 0;
 
