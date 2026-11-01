@@ -25,7 +25,7 @@ function init() {
     var boardWidth = PieceWidth * (cols + 2);
     var boardHeight = PieceHeight * (rows + 2);
     var headerHeight = 40; // The fixed top bar height
-    
+
     // Available workspace dimensions
     var availableWidth = window.innerWidth;
     var availableHeight = window.innerHeight - headerHeight;
@@ -53,7 +53,7 @@ function init() {
         checksound = true;
     }
     changeSound();
-    
+
     var list = new Array;
     var i;
     for (i = 1; i <= 36; i++) list.push(getImagePath(i));
@@ -68,6 +68,18 @@ function play() {
 }
 
 function replay() {
+    var confirmMessage = "Are you sure you want to start a new game? This will reset your active level progress.";
+
+    if (!confirm(confirmMessage)) {
+        return;
+    }
+
+    var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
+
+    gameMode = Number.parseInt(choice) || gameModes.sequently;
+
+    localStorage.setItem("game_mode", gameMode);
+
     _board.newGame();
 }
 
@@ -80,8 +92,8 @@ function showHighscore() {
     if (scrollID > 0) clearInterval(scrollID);
     $("#list").empty();
     scoreCount = 0;
-    document.getElementById("scoreboard").style.top = PieceHeight +"px";
-    document.getElementById("scoreboard").style.left = PieceWidth + offsetLeft +"px";
+    document.getElementById("scoreboard").style.top = PieceHeight + "px";
+    document.getElementById("scoreboard").style.left = PieceWidth + offsetLeft + "px";
     document.getElementById("scoreboard").style.visibility = "visible";
     scrolllist();
 }
@@ -100,7 +112,7 @@ function loadHighscore() {
         data: "",
         dataType: "json",
         success: function (result) {
-            $.each(result, function(index, row){
+            $.each(result, function (index, row) {
                 var odd = true;
                 if ((index % 2) == 0) odd = false;
                 addHighscoreItem(scoreCount + index + 1, row.Player, row.Score, odd);
@@ -136,13 +148,12 @@ function addHighscoreItem(rank, name, score, odd) {
     document.getElementById("list").appendChild(div);
 }
 
-function scrolllist(){
-    var scrolltop=$('#list').attr('scrollTop');
-    var scrollheight=$('#list').attr('scrollHeight');
-    var windowheight=$('#list').attr('clientHeight');
-    var scrolloffset=2;
-    if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))
-    {
+function scrolllist() {
+    var scrolltop = $('#list').attr('scrollTop');
+    var scrollheight = $('#list').attr('scrollHeight');
+    var windowheight = $('#list').attr('clientHeight');
+    var scrolloffset = 2;
+    if (scrolltop >= (scrollheight - (windowheight + scrolloffset))) {
         loadHighscore();
     }
     scrollID = setTimeout('scrolllist();', 1000);
@@ -171,7 +182,7 @@ function rewardLife() {
 }
 
 function saveScore(player, score, level, callback) {
-    NativePlugin.prepareScore(function(data) {
+    NativePlugin.prepareScore(function (data) {
         var d = new Date();
         $.ajax({
             url: "http://games.songsinh.com/api/score/savescore",
@@ -190,7 +201,7 @@ function saveScore(player, score, level, callback) {
             }
         });
 
-    }, function(error) {
+    }, function (error) {
         alert(getString('txt_savescorefailed', lang));
         if (callback) callback();
     }, player, "classic", level, score);
