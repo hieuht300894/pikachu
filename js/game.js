@@ -273,9 +273,10 @@ function onPiecePaired() {
             }
 
             // FIX: Pass the FIRST level number out of the remaining random pool array!
-            _board.setNewLevel(pool[0]);
+            var nextRandomLevel = pool[0];
+            _board.setNewLevel(nextRandomLevel);
         } else {
-            // Classical Mode Ladder Progression
+            // Classical Sequential Mode Progression Track
             if (_board.level == maxLevel) {
                 var player = prompt("You win the entire game! Enter your name:", "");
                 if (player != null) {
