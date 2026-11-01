@@ -44,14 +44,13 @@ function newBoard() {
 
         var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
 
-        gameMode = Number.parseInt(choice) || gameModes.sequently;
+        const gameMode = Number.parseInt(choice) || gameModes.sequently;
 
         levelQueue = [...Array(maxLevel).keys()].map(index => index + 1);
         if (gameMode === gameModes.shuffle) {
             levelQueue.sort(() => Math.random() - 0.5);
         }
 
-        localStorage.setItem("game_mode", gameMode);
         localStorage.setItem("level_queue", JSON.stringify(levelQueue));
 
         this.totalScore = 0;
@@ -71,8 +70,6 @@ function newBoard() {
         if (currentLevel === 0) {
             this.newGame();
         } else {
-
-
             this.totalScore = getIntItem("totalscore", 0);
             this.setLives(getIntItem("lives", 10));
             this.setNewLevel(currentLevel);
@@ -217,7 +214,7 @@ function onPiecePaired() {
     }
     // repaire matrix
     if (_board.level > 1) {
-        engine.fixMatrix(_board.arrValue, _board.level);
+        engine.fixMatrix(_board.arrValue, gameModes[_board.level - 1]);
         _board.applyMatrix();
     }
     // check no more pair

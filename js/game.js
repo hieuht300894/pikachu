@@ -19,8 +19,6 @@ var gameModes = {
     shuffle: 2,
 };
 
-var gameMode = gameModes.sequently;
-
 var levelQueue = [];
 
 function init() {
