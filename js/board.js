@@ -66,13 +66,15 @@ function newBoard() {
     }
 
     div.loadGame = function () {
-        var currentLevel = getIntItem("level", 0);
-        if (currentLevel === 0) {
+        this.levelQueue = JSON.parse(localStorage.getItem('level_queue') || '[]');
+
+        this.level = Number.parseInt(localStorage.getItem("level")) || 0;
+        if (this.level === 0 || this.levelQueue.length === 0) {
             this.newGame();
         } else {
-            this.totalScore = getIntItem("totalscore", 0);
-            this.setLives(getIntItem("lives", 10));
-            this.setNewLevel(currentLevel);
+            this.totalScore = Number.parseInt(localStorage.getItem("totalscore")) || 0;
+            this.setLives(Number.parseInt(localStorage.getItem("lives")) || 10);
+            this.setNewLevel(this.level);
         }
     }
 
@@ -182,12 +184,6 @@ function newBoard() {
     return div;
 }
 
-function getIntItem(key, defaultValue) {
-    var val = localStorage.getItem(key);
-    if (val === null) return defaultValue;
-    return parseInt(val);
-}
-
 function onPiecePaired() {
     // hide lines
     for (var i = 0; i < 3; i++)
@@ -214,7 +210,7 @@ function onPiecePaired() {
     }
     // repaire matrix
     if (_board.level > 1) {
-        engine.fixMatrix(_board.arrValue, gameModes[_board.level - 1]);
+        engine.fixMatrix(_board.arrValue, levelQueue[_board.level - 1]);
         _board.applyMatrix();
     }
     // check no more pair

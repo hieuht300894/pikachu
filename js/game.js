@@ -19,8 +19,6 @@ var gameModes = {
     shuffle: 2,
 };
 
-var levelQueue = [];
-
 function init() {
     var boardWidth = PieceWidth * (cols + 2);
     var boardHeight = PieceHeight * (rows + 2);
