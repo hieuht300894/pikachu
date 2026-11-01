@@ -14,6 +14,13 @@ var maxLevel = 40;
 var winScore = 720;
 var scoreCount = 0;
 
+var gameModes = {
+    sequently: 1,
+    shuffle: 2,
+};
+
+var gameMode = gameModes.sequently;
+
 function init() {
     var boardWidth = PieceWidth * (cols + 2);
     var boardHeight = PieceHeight * (rows + 2);
