@@ -22,46 +22,92 @@ function newBoard() {
     div.style.width = PieceWidth * (cols + 2) + "px";
     div.style.height = PieceHeight * (rows + 2) + "px";
 
-    div.setNewLevel = function(newLevel) {
+    div.setNewLevel = function (newLevel) {
         this.level = newLevel;
         this.score = 0;
         this.isWaiting = false;
         this.arrValue = engine.getNewMatrix();
         this.applyMatrix();
         this.saveGame();
-        var style = ["level" , Math.floor(Math.random() * 9) + 1].join('');
+
+        var style = ["level", Math.floor(Math.random() * 9) + 1].join('');
         document.body.setAttribute("class", style);
-        repaint("txtLevel", [this.level, maxLevel].join('/'));
+
+        // Print the accurate progress tracking text value
+        if (gameMode === "random") {
+            var dispLvl = localStorage.getItem("rand_display_level") || "1";
+            repaint("txtLevel", dispLvl + "/" + maxLevel);
+        } else {
+            repaint("txtLevel", [this.level, maxLevel].join('/'));
+        }
+
         repaint("txtLives", this.lives);
         repaint("txtScore", this.totalScore);
         onGameLoaded();
-    }
+    };
 
     div.newGame = function() {
         this.totalScore = 0;
         this.setLives(10);
-        this.setNewLevel(1);
-    }
-
-    div.saveGame = function() {
-        localStorage.setItem("level", this.level);
-        localStorage.setItem("lives", this.lives);
-        localStorage.setItem("totalscore", this.totalScore);
-    }
-
-    div.loadGame = function() {
-        var currentLevel = getIntItem("level", 0);
-        if (currentLevel === 0) {
-            this.newGame();
-            return;
+        
+        if (gameMode === "random") {
+            var pool = generateRandomLevelPool();
+            localStorage.setItem("rand_display_level", 1);
+            this.setNewLevel(pool);
         } else {
-            this.totalScore = getIntItem("totalscore", 0);
-            this.setLives(getIntItem("lives", 10));
-            this.setNewLevel(currentLevel);
+            this.setNewLevel(1);
         }
-    }
+    };
 
-    div.repairGame = function() {
+     div.saveGame = function() {
+        var prefix = (gameMode === "random") ? "rand_" : "seq_";
+        localStorage.setItem(prefix + "level", this.level);
+        localStorage.setItem(prefix + "lives", this.lives);
+        localStorage.setItem(prefix + "totalscore", this.totalScore);
+        
+        if (gameMode === "random") {
+            var poolStr = localStorage.getItem("rand_level_pool");
+            var pool = poolStr ? JSON.parse(poolStr) : [];
+            var completedCount = maxLevel - pool.length;
+            localStorage.setItem("rand_display_level", completedCount + 1);
+        }
+    };
+
+     div.loadGame = function() {
+        var prefix = (gameMode === "random") ? "rand_" : "seq_";
+        var savedLevel = localStorage.getItem(prefix + "level");
+        
+        if (savedLevel === null) {
+            this.totalScore = 0;
+            this.setLives(10);
+            
+            if (gameMode === "random") {
+                var pool = generateRandomLevelPool();
+                this.level = pool;
+                localStorage.setItem("rand_display_level", 1);
+                repaint("txtLevel", "1/" + maxLevel);
+            } else {
+                this.level = 1;
+                repaint("txtLevel", "1/" + maxLevel);
+            }
+            this.setNewLevel(this.level);
+        } else {
+            this.lives = parseInt(localStorage.getItem(prefix + "lives"), 10);
+            this.totalScore = parseInt(localStorage.getItem(prefix + "totalscore"), 10);
+            this.level = parseInt(savedLevel, 10);
+            
+            this.setNewLevel(this.level);
+            
+            if (gameMode === "random") {
+                var dispLvl = localStorage.getItem("rand_display_level") || "1";
+                repaint("txtLevel", dispLvl + "/" + maxLevel);
+            } else {
+                repaint("txtLevel", this.level + "/" + maxLevel);
+            }
+        }
+    };
+
+    div.repairGame = function () {
         if (this.lives <= 0) {
             var ok = confirm("You have no lives. Click OK to add more life or Cancel to return.");
             if (ok) showAd();
@@ -73,7 +119,7 @@ function newBoard() {
         }
     }
 
-    div.applyMatrix = function() {
+    div.applyMatrix = function () {
         var i, j;
         for (i = 1; i <= cols; i++) {
             for (j = 1; j <= rows; j++) {
@@ -88,7 +134,7 @@ function newBoard() {
         }
     }
 
-    div.setLives = function(val) {
+    div.setLives = function (val) {
         if (val == null || val == undefined || val == NaN) val = 10;
         this.lives = val;
         localStorage.setItem("lives", this.lives);
@@ -103,7 +149,7 @@ function newBoard() {
         this.setLives(this.lives + 1);
     }
 
-    div.drawPath = function(points) {
+    div.drawPath = function (points) {
         var point1 = points[0];
         var point2;
         var centre1, centre2;
@@ -123,7 +169,7 @@ function newBoard() {
             this.lines[i - 1].style.visibility = "visible";
     }
 
-    div.onClickPiece = function(evt, iClick, jClick) {
+    div.onClickPiece = function (evt, iClick, jClick) {
         playAudio(SOUND.PieceSelected);
         var mybutton = getMouseButton(evt);
         if (mybutton == 0) {
@@ -151,7 +197,7 @@ function newBoard() {
         }
     }
 
-    div.onmousedown = function(evt) {
+    div.onmousedown = function (evt) {
         if (window.event) evt = window.event;
         var tmp = getMouseButton(evt);
         if (tmp == 2 && this.isWaiting) {
