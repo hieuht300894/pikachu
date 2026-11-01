@@ -75,7 +75,6 @@ function showHighscore() {
     if (scrollID > 0) clearTimeout(scrollID);
     
     if (listElement) listElement.innerHTML = "";
-    scoreCount = 0;
     
     var scoreboard = document.getElementById("scoreboard");
     scoreboard.style.top = PieceHeight + "px";
@@ -91,14 +90,13 @@ function closeHighscore() {
     paused = false;
 }
 
-// Loads scores straight from LocalStorage instead of a network request
+// Read scores from LocalStorage
 function loadLocalHighscores() {
     if (!listElement) return;
     
     var localScores = localStorage.getItem("local_highscores");
     var scoresArray = localScores ? JSON.parse(localScores) : [];
 
-    // Render all scores stored locally
     for (var index = 0; index < scoresArray.length; index++) {
         var row = scoresArray[index];
         var odd = (index % 2) !== 0;
@@ -128,12 +126,6 @@ function addHighscoreItem(rank, name, score, odd) {
     if (listElement) listElement.appendChild(div);
 }
 
-// Cleaned up scroll list loop (infinite scroll logic removed since local scores load instantly)
-function scrolllist() {
-    // Kept structure intact in case other scripts rely on the scroll track loop presence
-    scrollID = setTimeout(scrolllist, 1000);
-}
-
 function onGameLoaded() {
     playAudio(SOUND.GameLoaded);
     if (timeID > 0) clearInterval(timeID);
@@ -156,33 +148,31 @@ function rewardLife() {
     _board.addLife();
 }
 
-// Saves score locally, automatically sorts the leaderboard, and keeps the top 100 entries
+// Saves score locally, automatically sorts the leaderboard, and keeps top 50 entries
 function saveScore(player, score, level, callback) {
     var localScores = localStorage.getItem("local_highscores");
     var scoresArray = localScores ? JSON.parse(localScores) : [];
     
-    // Add new entry
+    // Add new local highscore object
     scoresArray.push({
         Player: player,
         Score: score,
-        Level: level,
-        Date: new Date().getTime()
+        Level: level
     });
     
-    // Sort array descending based on score
+    // Sort scores from highest to lowest
     scoresArray.sort(function(a, b) {
         return b.Score - a.Score;
     });
     
-    // Optional: Trim list to Top 100 entries to optimize disk size
-    if (scoresArray.length > 100) {
-        scoresArray = scoresArray.slice(0, 100);
+    // Cap leaderboard at top 50 scores for screen optimization
+    if (scoresArray.length > 50) {
+        scoresArray = scoresArray.slice(0, 50);
     }
     
-    // Commit back to local storage
     localStorage.setItem("local_highscores", JSON.stringify(scoresArray));
     
-    // Find player's new rank rank
+    // Find player's position rank
     var playerRank = scoresArray.findIndex(function(item) {
         return item.Player === player && item.Score === score;
     }) + 1;
