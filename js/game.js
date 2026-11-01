@@ -21,6 +21,9 @@ var gameModes = {
 
 var gameMode = gameModes.sequently;
 
+var levelIndex = 0;
+var levelQueue = [];
+
 function init() {
     var boardWidth = PieceWidth * (cols + 2);
     var boardHeight = PieceHeight * (rows + 2);
@@ -68,18 +71,6 @@ function play() {
 }
 
 function replay() {
-    var confirmMessage = "Are you sure you want to start a new game? This will reset your active level progress.";
-
-    if (!confirm(confirmMessage)) {
-        return;
-    }
-
-    var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
-
-    gameMode = Number.parseInt(choice) || gameModes.sequently;
-
-    localStorage.setItem("game_mode", gameMode);
-
     _board.newGame();
 }
 

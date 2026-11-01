@@ -22,14 +22,14 @@ function newBoard() {
     div.style.width = PieceWidth * (cols + 2) + "px";
     div.style.height = PieceHeight * (rows + 2) + "px";
 
-    div.setNewLevel = function(newLevel) {
+    div.setNewLevel = function (newLevel) {
         this.level = newLevel;
         this.score = 0;
         this.isWaiting = false;
         this.arrValue = engine.getNewMatrix();
         this.applyMatrix();
         this.saveGame();
-        var style = ["level" , Math.floor(Math.random() * 9) + 1].join('');
+        var style = ["level", Math.floor(Math.random() * 9) + 1].join('');
         document.body.setAttribute("class", style);
         repaint("txtLevel", [this.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);
@@ -37,19 +37,39 @@ function newBoard() {
         onGameLoaded();
     }
 
-    div.newGame = function() {
+    div.newGame = function () {
+        if (!confirm("Are you sure you want to start a new game? This will reset your active level progress.")) {
+            return;
+        }
+
+        var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
+
+        gameMode = Number.parseInt(choice) || gameModes.sequently;
+
+        levelQueue = [...Array(maxLevel).keys()].map(index => index + 1);
+        if (gameMode === gameModes.shuffle) {
+            levelQueue.sort(() => Math.random() - 0.5);
+        }
+
+        levelIndex = 0;
+
+        localStorage.setItem("game_mode", gameMode);
+        localStorage.setItem("level_queue", JSON.stringify(levelQueue));
+        localStorage.setItem("level_index", 0);
+
         this.totalScore = 0;
+
         this.setLives(10);
         this.setNewLevel(1);
     }
 
-    div.saveGame = function() {
+    div.saveGame = function () {
         localStorage.setItem("level", this.level);
         localStorage.setItem("lives", this.lives);
         localStorage.setItem("totalscore", this.totalScore);
     }
 
-    div.loadGame = function() {
+    div.loadGame = function () {
         var currentLevel = getIntItem("level", 0);
         if (currentLevel === 0) {
             this.newGame();
@@ -61,7 +81,7 @@ function newBoard() {
         }
     }
 
-    div.repairGame = function() {
+    div.repairGame = function () {
         if (this.lives <= 0) {
             var ok = confirm("You have no lives. Click OK to add more life or Cancel to return.");
             if (ok) showAd();
@@ -73,7 +93,7 @@ function newBoard() {
         }
     }
 
-    div.applyMatrix = function() {
+    div.applyMatrix = function () {
         var i, j;
         for (i = 1; i <= cols; i++) {
             for (j = 1; j <= rows; j++) {
@@ -88,7 +108,7 @@ function newBoard() {
         }
     }
 
-    div.setLives = function(val) {
+    div.setLives = function (val) {
         if (val == null || val == undefined || val == NaN) val = 10;
         this.lives = val;
         localStorage.setItem("lives", this.lives);
@@ -103,7 +123,7 @@ function newBoard() {
         this.setLives(this.lives + 1);
     }
 
-    div.drawPath = function(points) {
+    div.drawPath = function (points) {
         var point1 = points[0];
         var point2;
         var centre1, centre2;
@@ -123,7 +143,7 @@ function newBoard() {
             this.lines[i - 1].style.visibility = "visible";
     }
 
-    div.onClickPiece = function(evt, iClick, jClick) {
+    div.onClickPiece = function (evt, iClick, jClick) {
         playAudio(SOUND.PieceSelected);
         var mybutton = getMouseButton(evt);
         if (mybutton == 0) {
@@ -151,7 +171,7 @@ function newBoard() {
         }
     }
 
-    div.onmousedown = function(evt) {
+    div.onmousedown = function (evt) {
         if (window.event) evt = window.event;
         var tmp = getMouseButton(evt);
         if (tmp == 2 && this.isWaiting) {
