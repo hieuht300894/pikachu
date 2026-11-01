@@ -42,21 +42,26 @@ function newBoard() {
             return;
         }
 
+        this.level = 1;
+        this.lives = 10;
+        this.totalScore = 0;
+
         var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
+
+        this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1);
 
         const gameMode = Number.parseInt(choice) || gameModes.sequently;
 
-        levelQueue = [...Array(maxLevel).keys()].map(index => index + 1);
         if (gameMode === gameModes.shuffle) {
-            levelQueue.sort(() => Math.random() - 0.5);
+            this.levelQueue.sort(() => Math.random() - 0.5);
         }
 
-        localStorage.setItem("level_queue", JSON.stringify(levelQueue));
+        this.levelQueue.unshift(this.level);
 
-        this.totalScore = 0;
+        localStorage.setItem("level_queue", JSON.stringify(this.levelQueue));
 
-        this.setLives(10);
-        this.setNewLevel(1);
+        this.setLives(this.lives);
+        this.setNewLevel(this.level);
     }
 
     div.saveGame = function () {
@@ -210,7 +215,7 @@ function onPiecePaired() {
     }
     // repaire matrix
     if (_board.level > 1) {
-        engine.fixMatrix(_board.arrValue, levelQueue[_board.level - 1]);
+        engine.fixMatrix(_board.arrValue, _board.levelQueue[_board.level - 1]);
         _board.applyMatrix();
     }
     // check no more pair
