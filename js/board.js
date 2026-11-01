@@ -46,25 +46,26 @@ function newBoard() {
         onGameLoaded();
     };
 
-    div.newGame = function() {
+    div.newGame = function () {
         this.totalScore = 0;
         this.setLives(10);
-        
+
         if (gameMode === "random") {
             var pool = generateRandomLevelPool();
             localStorage.setItem("rand_display_level", 1);
-            this.setNewLevel(pool);
+            // FIX: Target the first array index element parameter explicitly
+            this.setNewLevel(pool[0]);
         } else {
             this.setNewLevel(1);
         }
     };
 
-     div.saveGame = function() {
+    div.saveGame = function () {
         var prefix = (gameMode === "random") ? "rand_" : "seq_";
         localStorage.setItem(prefix + "level", this.level);
         localStorage.setItem(prefix + "lives", this.lives);
         localStorage.setItem(prefix + "totalscore", this.totalScore);
-        
+
         if (gameMode === "random") {
             var poolStr = localStorage.getItem("rand_level_pool");
             var pool = poolStr ? JSON.parse(poolStr) : [];
@@ -73,17 +74,18 @@ function newBoard() {
         }
     };
 
-     div.loadGame = function() {
+    div.loadGame = function () {
         var prefix = (gameMode === "random") ? "rand_" : "seq_";
         var savedLevel = localStorage.getItem(prefix + "level");
-        
+
         if (savedLevel === null) {
             this.totalScore = 0;
             this.setLives(10);
-            
+
             if (gameMode === "random") {
                 var pool = generateRandomLevelPool();
-                this.level = pool;
+                // FIX: Pick the first randomized number from our new array pool
+                this.level = pool[0];
                 localStorage.setItem("rand_display_level", 1);
                 repaint("txtLevel", "1/" + maxLevel);
             } else {
@@ -95,9 +97,9 @@ function newBoard() {
             this.lives = parseInt(localStorage.getItem(prefix + "lives"), 10);
             this.totalScore = parseInt(localStorage.getItem(prefix + "totalscore"), 10);
             this.level = parseInt(savedLevel, 10);
-            
+
             this.setNewLevel(this.level);
-            
+
             if (gameMode === "random") {
                 var dispLvl = localStorage.getItem("rand_display_level") || "1";
                 repaint("txtLevel", dispLvl + "/" + maxLevel);

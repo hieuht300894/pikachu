@@ -22,14 +22,14 @@ var gameMode = "currently"; // Track game path mode tracks: 'currently' or 'rand
 function init() {
     var boardWidth = PieceWidth * (cols + 2);
     var boardHeight = PieceHeight * (rows + 2);
-    var headerHeight = 40; 
-    
+    var headerHeight = 40;
+
     var availableWidth = window.innerWidth;
     var availableHeight = window.innerHeight - headerHeight;
 
     var scaleX = availableWidth / boardWidth;
     var scaleY = availableHeight / boardHeight;
-    var scale = Math.min(scaleX, scaleY, 1); 
+    var scale = Math.min(scaleX, scaleY, 1);
 
     var boardContainer = document.getElementById("board");
     if (boardContainer) {
@@ -50,7 +50,7 @@ function init() {
         checksound = true;
     }
     changeSound();
-    
+
     var list = [];
     for (var i = 1; i <= 36; i++) list.push(getImagePath(i));
     new ImagePreloader(list, play);
@@ -69,9 +69,9 @@ function play() {
 function replay() {
     // Popup window presenting a dual game mode selection prompt to the player
     var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
-    
+
     if (choice === null) return; // User canceled the dialog prompt action
-    
+
     if (choice === "1") {
         gameMode = "currently";
         localStorage.setItem("active_game_mode", "currently");
@@ -238,43 +238,48 @@ function generateRandomLevelPool() {
 
 function onPiecePaired() {
     for (var i = 0; i < 3; i++) _board.lines[i].style.visibility = "hidden";
-    
+
     _board.score += 10;
     repaint("txtScore", _board.totalScore + _board.score);
-    
+
     if (_board.score == winScore) {
         _board.totalScore += _board.score + elTimebar.tmp;
-        
+
         alert(getString("txt_levelcompleted", lang));
         _board.addLife();
-        
+
         if (gameMode === "random") {
             var poolStr = localStorage.getItem("rand_level_pool");
             var pool = poolStr ? JSON.parse(poolStr) : [];
-            
+
+            // Remove the level that was just cleared from our remaining tracker pool
             var currentLevelIndex = pool.indexOf(_board.level);
             if (currentLevelIndex !== -1) {
                 pool.splice(currentLevelIndex, 1);
             }
-            
+
             localStorage.setItem("rand_level_pool", JSON.stringify(pool));
-            
+
+            // Check if player has successfully cleared all 40 random levels
             if (pool.length === 0) {
                 var player = prompt("Incredible! You completed all 40 random levels! Enter your name:", "");
                 if (player != null) {
-                    saveScore(player, _board.totalScore, maxLevel, function() { 
+                    saveScore(player, _board.totalScore, maxLevel, function () {
                         localStorage.removeItem("rand_level_pool");
-                        _board.newGame(); 
+                        _board.newGame();
                     });
                 }
                 return;
             }
-            _board.setNewLevel(pool);
+
+            // FIX: Pass the FIRST level number out of the remaining random pool array!
+            _board.setNewLevel(pool[0]);
         } else {
+            // Classical Mode Ladder Progression
             if (_board.level == maxLevel) {
                 var player = prompt("You win the entire game! Enter your name:", "");
                 if (player != null) {
-                    saveScore(player, _board.totalScore, _board.level, function() { _board.newGame(); });
+                    saveScore(player, _board.totalScore, _board.level, function () { _board.newGame(); });
                 }
                 return;
             }
@@ -282,12 +287,12 @@ function onPiecePaired() {
         }
         return;
     }
-    
+
     if (_board.level > 1) {
         engine.fixMatrix(_board.arrValue, _board.level);
         _board.applyMatrix();
     }
-    
+
     if (engine.isEnd(_board.arrValue)) {
         if (_board.lives <= 0) {
             if (confirm("You have no lives. Click OK to add more life or Cancel to start a new game.")) {
