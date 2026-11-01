@@ -8,49 +8,49 @@ var PieceWidth = 42;
 var PieceHeight = 52;
 var cols = 16;
 var rows = 9;
-var offsetTop = -26;//header height
+var offsetTop = 0;
 var offsetLeft = 0;
 var maxLevel = 40;
 var winScore = 720;
 var scoreCount = 0;
 
+// Cached DOM element
+var listElement = null;
+
 function init() {
     var boardWidth = PieceWidth * (cols + 2);
     var boardHeight = PieceHeight * (rows + 2);
-    var headerHeight = 40; // The fixed top bar height
+    var headerHeight = 40; 
     
-    // Available workspace dimensions
     var availableWidth = window.innerWidth;
     var availableHeight = window.innerHeight - headerHeight;
 
-    // Calculate independent width and height scaling bounds
     var scaleX = availableWidth / boardWidth;
     var scaleY = availableHeight / boardHeight;
-    var scale = Math.min(scaleX, scaleY, 1); // Cap scale at 1 to prevent blurring on huge screens
+    var scale = Math.min(scaleX, scaleY, 1); 
 
-    // Apply the scaling and center alignment to the board container
     var boardContainer = document.getElementById("board");
     if (boardContainer) {
         boardContainer.style.transform = "scale(" + scale + ")";
         boardContainer.style.transformOrigin = "top center";
     }
 
-    // Force absolute offset resets since we now rely on clean CSS scaling matrices
     offsetTop = 0;
     offsetLeft = 0;
 
     document.getElementById("header").style.visibility = "visible";
 
     checksound = localStorage.getItem("checksound");
-    if (checksound == null || checksound == undefined) {
+    if (checksound === null || checksound === undefined) {
         checksound = true;
     }
     changeSound();
     
-    var list = new Array;
-    var i;
-    for (i = 1; i <= 36; i++) list.push(getImagePath(i));
-    var t = new ImagePreloader(list, play);
+    var list = [];
+    for (var i = 1; i <= 36; i++) {
+        list.push(getImagePath(i));
+    }
+    new ImagePreloader(list, play);
 }
 
 function play() {
@@ -58,6 +58,8 @@ function play() {
     _board.loadGame();
     document.getElementById("board").appendChild(_board);
     document.getElementById("maintable").style.visibility = "visible";
+    
+    listElement = document.getElementById("list");
 }
 
 function replay() {
@@ -70,90 +72,81 @@ function change() {
 
 function showHighscore() {
     paused = true;
-    if (scrollID > 0) clearInterval(scrollID);
-    $("#list").empty();
+    if (scrollID > 0) clearTimeout(scrollID);
+    
+    if (listElement) listElement.innerHTML = "";
     scoreCount = 0;
-    document.getElementById("scoreboard").style.top = PieceHeight +"px";
-    document.getElementById("scoreboard").style.left = PieceWidth + offsetLeft +"px";
-    document.getElementById("scoreboard").style.visibility = "visible";
-    scrolllist();
+    
+    var scoreboard = document.getElementById("scoreboard");
+    scoreboard.style.top = PieceHeight + "px";
+    scoreboard.style.left = (PieceWidth + offsetLeft) + "px";
+    scoreboard.style.visibility = "visible";
+    
+    loadLocalHighscores();
 }
 
 function closeHighscore() {
     document.getElementById("scoreboard").style.visibility = "hidden";
-    if (scrollID > 0) clearInterval(scrollID);
+    if (scrollID > 0) clearTimeout(scrollID);
     paused = false;
 }
 
-function loadHighscore() {
-    $.ajax({
-        url: "http://games.songsinh.com/api/score/highscore?start=" + scoreCount + "&length=10",
-        type: 'GET',
-        contentType: 'application/json',
-        data: "",
-        dataType: "json",
-        success: function (result) {
-            $.each(result, function(index, row){
-                var odd = true;
-                if ((index % 2) == 0) odd = false;
-                addHighscoreItem(scoreCount + index + 1, row.Player, row.Score, odd);
-            });
-            scoreCount += result.length;
-        },
-        error: function (jqXhr, textStatus, errorThrown) {
-            alert(getString('txt_gethighscorefailed', lang));
-            closeHighscore();
-        }
-    });
+// Loads scores straight from LocalStorage instead of a network request
+function loadLocalHighscores() {
+    if (!listElement) return;
+    
+    var localScores = localStorage.getItem("local_highscores");
+    var scoresArray = localScores ? JSON.parse(localScores) : [];
+
+    // Render all scores stored locally
+    for (var index = 0; index < scoresArray.length; index++) {
+        var row = scoresArray[index];
+        var odd = (index % 2) !== 0;
+        addHighscoreItem(index + 1, row.Player, row.Score, odd);
+    }
 }
 
 function addHighscoreItem(rank, name, score, odd) {
     var div = document.createElement("div");
-    if (odd) {
-        div.className = "highscore-item odd";
-    } else {
-        div.className = "highscore-item even";
-    }
+    div.className = "highscore-item " + (odd ? "odd" : "even");
+    
     var divrank = document.createElement("div");
     divrank.className = "rank";
-    divrank.innerHTML = rank;
+    divrank.textContent = rank;
     div.appendChild(divrank);
+    
     var divname = document.createElement("div");
     divname.className = "player";
-    divname.innerHTML = name;
+    divname.textContent = name;
     div.appendChild(divname);
+    
     var divscore = document.createElement("div");
     divscore.className = "score";
-    divscore.innerHTML = score;
+    divscore.textContent = score;
     div.appendChild(divscore);
-    document.getElementById("list").appendChild(div);
+    
+    if (listElement) listElement.appendChild(div);
 }
 
-function scrolllist(){
-    var scrolltop=$('#list').attr('scrollTop');
-    var scrollheight=$('#list').attr('scrollHeight');
-    var windowheight=$('#list').attr('clientHeight');
-    var scrolloffset=2;
-    if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))
-    {
-        loadHighscore();
-    }
-    scrollID = setTimeout('scrolllist();', 1000);
+// Cleaned up scroll list loop (infinite scroll logic removed since local scores load instantly)
+function scrolllist() {
+    // Kept structure intact in case other scripts rely on the scroll track loop presence
+    scrollID = setTimeout(scrolllist, 1000);
 }
 
 function onGameLoaded() {
     playAudio(SOUND.GameLoaded);
     if (timeID > 0) clearInterval(timeID);
     elTimebar.tmp = maxTime;
-    elTimebar.style.width = maxTime / 2 + "px";
-    timeID = setInterval("decTime()", 1250);
+    elTimebar.style.width = (maxTime / 2) + "px";
+    timeID = setInterval(decTime, 1250);
 }
 
 function decTime() {
     if (paused) return;
     elTimebar.tmp--;
-    elTimebar.style.width = elTimebar.tmp / 2 + "px";
-    if (elTimebar.tmp == 0) {
+    elTimebar.style.width = (elTimebar.tmp / 2) + "px";
+    if (elTimebar.tmp === 0) {
         alert(getString('txt_gameover', lang));
         replay();
     }
@@ -163,28 +156,38 @@ function rewardLife() {
     _board.addLife();
 }
 
+// Saves score locally, automatically sorts the leaderboard, and keeps the top 100 entries
 function saveScore(player, score, level, callback) {
-    NativePlugin.prepareScore(function(data) {
-        var d = new Date();
-        $.ajax({
-            url: "http://games.songsinh.com/api/score/savescore",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            dataType: "json",
-            success: function (result) {
-                alert(getString('txt_yourrankis', lang) + result + ". " + getString('txt_playagain', lang));
-            },
-            error: function (jqXhr, textStatus, errorThrown) {
-                alert(getString('txt_savescorefailed', lang));
-            },
-            complete: function () {
-                if (callback) callback();
-            }
-        });
+    var localScores = localStorage.getItem("local_highscores");
+    var scoresArray = localScores ? JSON.parse(localScores) : [];
+    
+    // Add new entry
+    scoresArray.push({
+        Player: player,
+        Score: score,
+        Level: level,
+        Date: new Date().getTime()
+    });
+    
+    // Sort array descending based on score
+    scoresArray.sort(function(a, b) {
+        return b.Score - a.Score;
+    });
+    
+    // Optional: Trim list to Top 100 entries to optimize disk size
+    if (scoresArray.length > 100) {
+        scoresArray = scoresArray.slice(0, 100);
+    }
+    
+    // Commit back to local storage
+    localStorage.setItem("local_highscores", JSON.stringify(scoresArray));
+    
+    // Find player's new rank rank
+    var playerRank = scoresArray.findIndex(function(item) {
+        return item.Player === player && item.Score === score;
+    }) + 1;
 
-    }, function(error) {
-        alert(getString('txt_savescorefailed', lang));
-        if (callback) callback();
-    }, player, "classic", level, score);
+    alert(getString('txt_yourrankis', lang) + playerRank + ". " + getString('txt_playagain', lang));
+    
+    if (callback) callback();
 }
