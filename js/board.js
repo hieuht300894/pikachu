@@ -51,11 +51,8 @@ function newBoard() {
             levelQueue.sort(() => Math.random() - 0.5);
         }
 
-        levelIndex = 0;
-
         localStorage.setItem("game_mode", gameMode);
         localStorage.setItem("level_queue", JSON.stringify(levelQueue));
-        localStorage.setItem("level_index", 0);
 
         this.totalScore = 0;
 
@@ -73,8 +70,9 @@ function newBoard() {
         var currentLevel = getIntItem("level", 0);
         if (currentLevel === 0) {
             this.newGame();
-            return;
         } else {
+
+
             this.totalScore = getIntItem("totalscore", 0);
             this.setLives(getIntItem("lives", 10));
             this.setNewLevel(currentLevel);

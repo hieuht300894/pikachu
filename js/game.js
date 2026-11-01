@@ -21,7 +21,6 @@ var gameModes = {
 
 var gameMode = gameModes.sequently;
 
-var levelIndex = 0;
 var levelQueue = [];
 
 function init() {
