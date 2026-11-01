@@ -20,30 +20,14 @@ var gameModes = {
 };
 
 function init() {
-    var boardWidth = PieceWidth * (cols + 2);
-    var boardHeight = PieceHeight * (rows + 2);
-    var headerHeight = 40; // The fixed top bar height
-
-    // Available workspace dimensions
-    var availableWidth = window.innerWidth;
-    var availableHeight = window.innerHeight - headerHeight;
-
-    // Calculate independent width and height scaling bounds
-    var scaleX = availableWidth / boardWidth;
-    var scaleY = availableHeight / boardHeight;
-    var scale = Math.min(scaleX, scaleY, 1); // Cap scale at 1 to prevent blurring on huge screens
-
-    // Apply the scaling and center alignment to the board container
-    var boardContainer = document.getElementById("board");
-    if (boardContainer) {
-        boardContainer.style.transform = "scale(" + scale + ")";
-        boardContainer.style.transformOrigin = "top center";
+    var minHeight = PieceHeight * (rows + 2);
+    var windowHeight = window.innerHeight;
+    if (windowHeight < minHeight) {
+        scale = windowHeight / minHeight;
+        document.body.style.zoom = scale;
     }
 
-    // Force absolute offset resets since we now rely on clean CSS scaling matrices
-    offsetTop = 0;
-    offsetLeft = 0;
-
+    offsetLeft = ((screen.width / scale) - (PieceWidth * (cols + 2))) / 2;
     document.getElementById("header").style.visibility = "visible";
 
     checksound = localStorage.getItem("checksound");
@@ -51,7 +35,6 @@ function init() {
         checksound = true;
     }
     changeSound();
-
     var list = new Array;
     var i;
     for (i = 1; i <= 36; i++) list.push(getImagePath(i));
