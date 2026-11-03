@@ -2,6 +2,8 @@
  * Created by Linh on 4/1/2017.
  */
 function newBoard() {
+    var parentDiv = document.getElementById('board');
+
     var div = document.createElement("div");
 
     div.arrPiece = newArray(cols + 2);
@@ -22,8 +24,9 @@ function newBoard() {
     }
 
     div.style.position = 'relative';
-    div.style.width = '100%';
-    div.style.height = '100vh';
+    div.style.left = `${(document.getElementById("board").clientWidth - (PieceWidth * (cols + 2))) / 2}px`;
+    div.style.width = `${PieceWidth * (cols + 2)}px`;
+    div.style.height = `${PieceHeight * (rows + 2)}px`;
 
     div.setNewLevel = function (newLevel) {
         this.level = newLevel;
