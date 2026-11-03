@@ -4,14 +4,6 @@
 function newBoard() {
     var div = document.createElement("div");
 
-    div.arrPiece = newArray(cols + 2);
-    for (var i = 1; i <= cols; i++) {
-        for (var j = 1; j <= rows; j++) {
-            div.arrPiece[i][j] = newPiece(i, j, 0);
-            div.appendChild(div.arrPiece[i][j]);
-        }
-    }
-
     div.lines = new Array;
     for (var i = 0; i < 3; i++) {
         div.lines[i] = document.createElement("div");
@@ -19,6 +11,14 @@ function newBoard() {
         div.lines[i].style.backgroundColor = "red";
         div.lines[i].style.visibility = "hidden";
         div.appendChild(div.lines[i]);
+    }
+
+    div.arrPiece = newArray(cols + 2);
+    for (var i = 1; i <= cols; i++) {
+        for (var j = 1; j <= rows; j++) {
+            div.arrPiece[i][j] = newPiece(i, j, 0);
+            div.appendChild(div.arrPiece[i][j]);
+        }
     }
 
     div.style.position = 'relative';
