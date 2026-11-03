@@ -152,6 +152,8 @@ function newBoard() {
         playAudio(SOUND.PieceSelected);
         var mybutton = getMouseButton(evt);
         if (mybutton == 0) {
+            this.arrPiece[iClick][jClick].setSelected(50);
+
             if (this.isWaiting) {
                 this.isWaiting = false;
                 var list = engine.checkPath(this.arrValue, this.iFist, this.jFist, iClick, jClick);
@@ -164,13 +166,14 @@ function newBoard() {
                     setTimeout("onPiecePaired()", 200);
                     playAudio(SOUND.PiecePaired);
                 } else {
-                    playAudio(SOUND.NoPath);
                     this.arrPiece[this.iFist][this.jFist].setSelected(100);
+                    this.arrPiece[iClick][jClick].setSelected(100);
+                    playAudio(SOUND.NoPath);
                 }
             } else {
                 this.iFist = iClick;
                 this.jFist = jClick;
-                this.arrPiece[iClick][jClick].setSelected(50);
+                
                 this.isWaiting = true;
             }
         }
