@@ -54,7 +54,7 @@ function play() {
     _board.style.left = `${(elements.maintable.clientWidth - elements.board.clientWidth) / 2}px`;
 
     elements.maintable.style.visibility = "visible";
-    elements.maintable.style.marginTop = `${(elements.body.clientHeight - elements.maintable.clientHeight - PieceHeight) / 2}px`;
+    elements.maintable.style.marginTop = `${(elements.body.clientHeight - elements.maintable.clientHeight - elements.header.clientHeight) / 2}px`;
 }
 
 function replay() {
