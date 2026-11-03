@@ -148,6 +148,7 @@ function onGameLoaded() {
 function decTime() {
     if (paused) return;
     elTimebar.tmp--;
+    elTimebar.textContent = elTimebar.tmp;
     elTimebar.style.width = elTimebar.tmp / 2 + "px";
     if (elTimebar.tmp == 0) {
         alert(getString('txt_gameover', lang));
