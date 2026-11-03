@@ -12,17 +12,21 @@ function newPiece(col, row, value) {
         this.valueInMatrix = imgIndex;
     }
     if (value > 0) div.setImage(value);
+
     div.appendChild(div.image);
     div.colIndex = col;
     div.rowIndex = row;
     div.isVisible = true;
+
     div.dataset.columnIndex = col;
     div.dataset.rowIndex = row;
+
     div.style.position = 'absolute';
-    div.style.top = `${PieceHeight * row + offsetTop}px`;
-    div.style.left = `${PieceWidth * col + offsetLeft}px`;
+    div.style.top = `${row * PieceHeight + offsetTop}px`;
+    div.style.left = `${col * PieceWidth  + offsetLeft}px`;
     div.style.width = `${PieceWidth}px`;
     div.style.height = `${PieceHeight}px`;
+
     div.setVisible = function (flag) {
         this.isVisible = flag;
         this.style.visibility = flag ? "visible" : "hidden";
