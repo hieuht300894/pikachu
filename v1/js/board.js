@@ -231,7 +231,7 @@ function onPiecePaired() {
                 _board.newGame();
             }
         } else {
-            alert(getString("txt_levelcompleted", lang));
+            alert(['Level completed! Next level is ', _board.levelQueue[_board.level]].join(''));
             showAd();
             _board.addLife();
             _board.setNewLevel(_board.level + 1);
