@@ -202,9 +202,8 @@ function onPiecePaired() {
         if (_board.level == maxLevel) {
             var player = prompt("You win. Please enter your name", "");
             if (player != null) {
-                saveScore(player, _board.totalScore, _board.level, _board.newGame());
+                _board.newGame();
             }
-            //_board.newGame();
         } else {
             alert(getString("txt_levelcompleted", lang));
             showAd();
