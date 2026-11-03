@@ -15,6 +15,8 @@ function newPiece(col, row, value) {
     div.appendChild(div.image);
     div.colIndex = col;
     div.rowIndex = row;
+    div.dataset.columnIndex = col;
+    div.dataset.rowIndex = row;
     div.style.position = "absolute";
     div.style.left = col * PieceWidth  + offsetLeft + "px";
     div.style.top = row * PieceHeight + offsetTop + "px";
