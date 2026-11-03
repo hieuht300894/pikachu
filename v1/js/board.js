@@ -36,16 +36,19 @@ function newBoard() {
         document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
 
         switch (this.gameMode) {
-            case gameModes.sequently:
+            case gameModes.sequently.id:
                 repaint("txtGameMode", 'Sequence');
                 break;
-            case gameModes.shuffle:
+            case gameModes.shuffle.id:
                 repaint("txtGameMode", 'Shuffle');
+                break;
+            case gameModes.professional.id:
+                repaint("txtGameMode", 'Professional');
                 break;
             default:
                 repaint("txtGameMode", 'Unknown');
                 break;
-        }  
+        }
 
         repaint("txtLevel", [this.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);
@@ -63,20 +66,31 @@ function newBoard() {
         this.lives = 10;
         this.totalScore = 0;
 
-        this.gameMode = Number.parseInt(prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1")) || gameModes.sequently;
+        const promptMessages = [
+            'Select Game Mode:',
+            `Enter ${gameModes.sequently.id} for ${gameModes.sequently.name}`,
+            `Enter ${gameModes.shuffle.id} for ${gameModes.shuffle.name}`,
+            `Enter ${gameModes.professional.id} for ${gameModes.professional.name}`,
+        ];
+
+        this.gameMode = Number.parseInt(prompt(promptMessages.join('\n'), '')) || gameModes.sequently.id;
 
         switch (this.gameMode) {
-            case gameModes.sequently:
-                this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1);
+            case gameModes.sequently.id:
+                this.levelQueue = initializeSequenceLevel();
                 break;
-            case gameModes.shuffle:
-                this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1).sort(() => Math.random() - 0.5);
+            case gameModes.shuffle.id:
+                this.levelQueue = initializeShuffleLevel();
+                break;
+            case gameModes.professional.id:
+                this.levelQueue = initializeProfessionalLevel();
                 break;
             default:
                 this.levelQueue = [];
                 break;
-        }  
+        }
 
+        this.levelQueue.splice(this.levelQueue.indexOf(this.level), 1);
         this.levelQueue.unshift(this.level);
 
         localStorage.setItem("game_mode", this.gameMode);
@@ -193,7 +207,7 @@ function newBoard() {
             } else {
                 this.iFist = iClick;
                 this.jFist = jClick;
-                
+
                 this.isWaiting = true;
             }
         }
@@ -257,4 +271,64 @@ function onPiecePaired() {
             _board.repairGame();
         }
     }
+}
+
+function initializeSequenceLevel() {
+    return [...Array(maxLevel).keys()].map(x => x + 1);
+}
+
+function initializeShuffleLevel() {
+    return [...Array(maxLevel).keys()].map(x => x + 1).sort(() => Math.random() - 0.5);
+}
+
+function initializeProfessionalLevel() {
+    return [
+        // --- EASY LEVELS ---
+        1,  // Classic / Static
+        3,  // Global Slide DOWN
+        2,  // Global Slide UP
+        4,  // Global Slide LEFT
+        5,  // Global Slide RIGHT
+
+        // --- MEDIUM LEVELS ---
+        6,  // Top UP, Bottom DOWN
+        7,  // Top DOWN, Bottom UP
+        8,  // Left LEFT, Right RIGHT
+        9,  // Left RIGHT, Right LEFT
+        10, // Top LEFT, Bottom RIGHT
+        11, // Top RIGHT, Bottom LEFT
+        12, // Left UP, Right DOWN
+        13, // Left DOWN, Right UP
+        14, // Horizontal Central Squeeze
+        16, // Vertical Central Squeeze
+        15, // Horizontal Outer Escape
+        17, // Vertical Outer Escape
+        33, // New Channel: Horizontal Central Squeeze
+        35, // New Channel: Vertical Central Squeeze
+        34, // New Channel: Horizontal Outer Escape
+        36, // New Channel: Vertical Outer Escape
+
+        // --- HARD LEVELS ---
+        26, // 3-Way Column Divergence
+        27, // 3-Way Column Alternation
+        28, // 3-Way Row Sliding Interlock
+        37, // Tiered Horizontal Zig-Zag
+        38, // Tiered Horizontal Inverse Zig-Zag
+        18, // Pinwheel Clockwise
+        19, // Pinwheel Counter-Clockwise
+        20, // Quadrants Collapse to Center
+        21, // Quadrants Scatter Outwards
+        29, // Slanted Cascade Variant A
+        30, // Slanted Cascade Variant B
+
+        // --- EXTREME LEVELS ---
+        22, // Alternate Columns Interlocking Vertically (Odd UP / Even DOWN)
+        23, // Alternate Rows Interlocking Horizontally (Odd LEFT / Even RIGHT)
+        24, // Frame Borders Squeeze Inward
+        25, // Inner Anchor Core Burst
+        31, // Compound Slanted Cascade
+        32, // Compound Cascade Vortex
+        39, // Dual Cross-Corner Intersection Slices
+        40  // Synchronized Multi-Boundary Compression Ripple (Hardest)
+    ];
 }

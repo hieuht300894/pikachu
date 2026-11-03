@@ -15,8 +15,21 @@ var winScore = 720;
 var scoreCount = 0;
 
 var gameModes = {
-    sequently: 1,
-    shuffle: 2,
+    sequently: {
+        id: 1,
+        name: 'Sequentially',
+        description: 'Play in numerical order',
+    },
+    shuffle: {
+        id: 2,
+        name: 'Shuffle',
+        description: 'Play in a completely random order',
+    },
+    professional: {
+        id: 3,
+        name: 'Professional',
+        description: 'Play from Easiest to Hardest',
+    },
 };
 
 function init() {
