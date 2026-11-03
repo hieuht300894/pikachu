@@ -44,23 +44,17 @@ function play() {
     _board = newBoard();
     _board.loadGame();
 
-    const clientRectangles = {
-        body: document.body.getBoundingClientRect(),
-        header: document.getElementById("header").getBoundingClientRect(),
-        maintable: document.getElementById("maintable").getBoundingClientRect(),
-        board: document.getElementById("board").getBoundingClientRect(),
-    };
-
-    console.log(clientRectangles);
-
-    _board.style.left = `${(clientRectangles.maintable.width - clientRectangles.board.width) / 2}px`;
-
     const elements = {
+        body: document.body,
+        header: document.getElementById("header"),
         maintable: document.getElementById("maintable"),
+        board: document.getElementById("board"),
     };
+
+    _board.style.left = `${(elements.maintable.clientWidth - elements.board.clientWidth) / 2}px`;
 
     elements.maintable.style.visibility = "visible";
-    elements.maintable.style.marginTop = `${(clientRectangles.body.height - clientRectangles.maintable.height - PieceHeight) / 2}px`;
+    elements.maintable.style.marginTop = `${(elements.body.clientHeight - elements.maintable.clientHeight - PieceHeight) / 2}px`;
 }
 
 function replay() {
