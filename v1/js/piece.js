@@ -19,8 +19,8 @@ function newPiece(col, row, value) {
     div.dataset.columnIndex = col;
     div.dataset.rowIndex = row;
     div.style.position = 'absolute';
-    div.style.top = `${PieceHeight * row}px`;
-    div.style.left = `${PieceWidth * col}px`;
+    div.style.top = `${PieceHeight * row + offsetTop}px`;
+    div.style.left = `${PieceWidth * col + offsetLeft}px`;
     div.style.width = `${PieceWidth}px`;
     div.style.height = `${PieceHeight}px`;
     div.setVisible = function (flag) {
