@@ -22,8 +22,8 @@ function newBoard() {
     }
 
     div.style.position = 'relative';
-    div.style.width = `${PieceWidth * (cols + 2)}px`;
-    div.style.height = `${PieceHeight * (rows + 2)}px`;
+    div.style.width = '100%';
+    div.style.height = '100vh';
 
     div.setNewLevel = function (newLevel) {
         this.level = newLevel;
