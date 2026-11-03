@@ -32,11 +32,25 @@ function newBoard() {
         this.arrValue = engine.getNewMatrix();
         this.applyMatrix();
         this.saveGame();
-        var style = ["level", Math.floor(Math.random() * 9) + 1].join('');
-        document.body.setAttribute("class", style);
+
+        document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
+
+        switch (this.gameMode) {
+            case gameModes.sequently:
+                repaint("txtGameMode", 'Sequence');
+                break;
+            case gameModes.shuffle:
+                repaint("txtGameMode", 'Shuffle');
+                break;
+            default:
+                repaint("txtGameMode", 'Unknown');
+                break;
+        }  
+
         repaint("txtLevel", [this.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);
         repaint("txtScore", this.totalScore);
+        
         onGameLoaded();
     }
 
@@ -48,19 +62,21 @@ function newBoard() {
         this.level = 1;
         this.lives = 10;
         this.totalScore = 0;
+        this.gameMode = gameModes.sequently;
 
         var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
 
         this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1);
 
-        const gameMode = Number.parseInt(choice) || gameModes.sequently;
+        this.gameMode = Number.parseInt(choice) || gameModes.sequently;
 
-        if (gameMode === gameModes.shuffle) {
+        if (this.gameMode === gameModes.shuffle) {
             this.levelQueue.sort(() => Math.random() - 0.5);
         }
 
         this.levelQueue.unshift(this.level);
 
+        localStorage.setItem("game_mode", this.gameMode);
         localStorage.setItem("level_queue", JSON.stringify(this.levelQueue));
 
         this.setLives(this.lives);
@@ -74,10 +90,11 @@ function newBoard() {
     }
 
     div.loadGame = function () {
+        this.gameMode = Number.parseInt(localStorage.getItem("game_mode"));
         this.levelQueue = JSON.parse(localStorage.getItem('level_queue') || '[]');
 
         this.level = Number.parseInt(localStorage.getItem("level")) || 0;
-        if (this.level === 0 || this.levelQueue.length === 0) {
+        if (!this.gameMode || !this.level || !this.levelQueue.length) {
             this.newGame();
         } else {
             this.totalScore = Number.parseInt(localStorage.getItem("totalscore")) || 0;
