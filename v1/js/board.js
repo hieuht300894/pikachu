@@ -18,9 +18,11 @@ function newBoard() {
             div.appendChild(div.arrPiece[i][j]);
         }
     }
-    div.style.position = "relative";
-    div.style.width = PieceWidth * (cols + 2) + "px";
-    div.style.height = PieceHeight * (rows + 2) + "px";
+
+    div.style.display = 'grid';
+    div.style.gridTemplateColumns = `repeat(${cols}, ${PieceWidth}px)`;
+    div.style.gridTemplateRows = `repeat(${rows}, ${PieceHeight}px)`;
+    div.style.gridAutoFlow = 'column';
 
     div.setNewLevel = function (newLevel) {
         this.level = newLevel;
