@@ -50,7 +50,7 @@ function newBoard() {
         repaint("txtLevel", [this.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);
         repaint("txtScore", this.totalScore);
-        
+
         onGameLoaded();
     }
 
@@ -62,17 +62,20 @@ function newBoard() {
         this.level = 1;
         this.lives = 10;
         this.totalScore = 0;
-        this.gameMode = gameModes.sequently;
 
-        var choice = prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1");
+        this.gameMode = Number.parseInt(prompt("Select Game Mode:\nEnter 1 for Sequently Mode\nEnter 2 for Shuffled Random Mode", "1")) || gameModes.sequently;
 
-        this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1);
-
-        this.gameMode = Number.parseInt(choice) || gameModes.sequently;
-
-        if (this.gameMode === gameModes.shuffle) {
-            this.levelQueue.sort(() => Math.random() - 0.5);
-        }
+        switch (this.gameMode) {
+            case gameModes.sequently:
+                this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1);
+                break;
+            case gameModes.shuffle:
+                this.levelQueue = [...Array(maxLevel).keys()].filter(x => x > 0).map(x => x + 1).sort(() => Math.random() - 0.5);
+                break;
+            default:
+                this.levelQueue = [];
+                break;
+        }  
 
         this.levelQueue.unshift(this.level);
 
