@@ -28,6 +28,7 @@ function init() {
     }
 
     offsetLeft = ((screen.width / scale) - (PieceWidth * (cols + 2))) / 2;
+    
     document.getElementById("header").style.visibility = "visible";
 
     checksound = localStorage.getItem("checksound");
