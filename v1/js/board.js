@@ -24,7 +24,6 @@ function newBoard() {
     }
 
     div.style.position = 'relative';
-    div.style.left = `${(document.getElementById("board").clientWidth - (PieceWidth * (cols + 2))) / 2}px`;
     div.style.width = `${PieceWidth * (cols + 2)}px`;
     div.style.height = `${PieceHeight * (rows + 2)}px`;
 

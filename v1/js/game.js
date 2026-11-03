@@ -45,6 +45,9 @@ function play() {
     _board.loadGame();
     document.getElementById("board").appendChild(_board);
     document.getElementById("maintable").style.visibility = "visible";
+
+    _board.style.top = `${0}px`;
+    _board.style.left = `${(document.getElementById("board").clientWidth - _board.clientWidth) / 2}px`;
 }
 
 function replay() {
