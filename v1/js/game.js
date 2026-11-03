@@ -141,6 +141,7 @@ function onGameLoaded() {
     playAudio(SOUND.GameLoaded);
     if (timeID > 0) clearInterval(timeID);
     elTimebar.tmp = maxTime;
+    elTimebar.textContent = maxTime;
     elTimebar.style.width = maxTime / 2 + "px";
     timeID = setInterval("decTime()", 1250);
 }
