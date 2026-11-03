@@ -18,13 +18,16 @@ function newPiece(col, row, value) {
     div.isVisible = true;
     div.dataset.columnIndex = col;
     div.dataset.rowIndex = row;
-    div.style.width = `${PieceWidth}px)`;
-    div.style.height = `${PieceHeight}px)`;
-    div.setVisible = function(flag) {
+    div.style.position = 'absolute';
+    div.style.top = `${PieceHeight * row}px`;
+    div.style.left = `${PieceWidth * col}px`;
+    div.style.width = `${PieceWidth}px`;
+    div.style.height = `${PieceHeight}px`;
+    div.setVisible = function (flag) {
         this.isVisible = flag;
         this.style.visibility = flag ? "visible" : "hidden";
     }
-    div.setBorder = function(thick, color) {
+    div.setBorder = function (thick, color) {
         this.image.border = thick;
         this.image.style.borderColor = color;
     }

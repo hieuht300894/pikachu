@@ -15,15 +15,15 @@ function newBoard() {
     div.lines = new Array;
     for (var i = 0; i < 3; i++) {
         div.lines[i] = document.createElement("div");
-        div.lines[i].style.visibility = "hidden";
+        div.lines[i].style.position = "absolute";
         div.lines[i].style.backgroundColor = "red";
+        div.lines[i].style.visibility = "hidden";
         div.appendChild(div.lines[i]);
     }
 
-    div.style.display = 'grid';
-    div.style.gridTemplateColumns = `repeat(${cols}, ${PieceWidth}px)`;
-    div.style.gridTemplateRows = `repeat(${rows}, ${PieceHeight}px)`;
-    div.style.gridAutoFlow = 'column';
+    div.style.position = 'relative';
+    div.style.width = `${PieceWidth * cols}px`;
+    div.style.height = `${PieceHeight * rows}px`;
 
     div.setNewLevel = function (newLevel) {
         this.level = newLevel;
