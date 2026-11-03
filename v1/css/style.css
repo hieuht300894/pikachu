@@ -1,0 +1,215 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+body {
+    background: url(../img/bg1.jpg) no-repeat;
+}
+#maintable {
+	margin: 0 auto;
+	overflow: auto;
+}
+#header {
+    width: 100%;
+    visibility: hidden;
+    font-size: medium;
+    font-weight: bold;
+    font-family: Roboto,Helvetica, Arial;
+    color: #fff;
+    overflow: hidden;
+    background: url(../img/bar_bg.png) repeat-x;
+}
+#header div {
+    float: left;
+    padding-top: 12px;
+    padding-right: 7px;
+    padding-left: 7px;
+}
+#header input {
+    float: left;
+    margin-top: 4px;
+    margin-right: 7px;
+    margin-left: 7px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+#header .separator {
+    padding: 0px;
+    width: 1px;
+    height: 40px;
+    background: url("../img/separator.png") repeat-x;
+}
+#btnChange
+{
+    background: url(../img/btnchange.png) no-repeat 0 0;
+}
+#btnChange[disabled]
+{
+    background: url(../img/btnchange_disabled.png) no-repeat 0 0;
+}
+#btnNewGame
+{
+    background: url(../img/btnreplay.png) no-repeat 0 0;
+}
+#btnAddLife
+{
+    background: url(../img/add.png) no-repeat 0 0;
+}
+#btnAddLife[disabled]
+{
+    background: url(../img/add_disabled.png) no-repeat 0 0;
+}
+#btnHighscore
+{
+    float: right !important;
+    background: url(../img/highscore.png) no-repeat 0 0;
+}
+#btnChangeSound
+{
+    float: right !important;
+    background: url(../img/btnsound_off.png) no-repeat 0 0;
+}
+.soundOff
+{
+    background: url(../img/btnsound_on.png) no-repeat 0 0 !important;
+}
+.soundOn
+{
+    background: url(../img/btnsound_off.png) no-repeat 0 0 !important;
+}
+.level1 {
+	background: url(../img/bg1.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level2 {
+	background: url(../img/bg2.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level3 {
+	background: url(../img/bg3.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level4 {
+	background: url(../img/bg4.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level5 {
+	background: url(../img/bg5.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level6 {
+	background: url(../img/bg6.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level7 {
+	background: url(../img/bg7.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level8 {
+	background: url(../img/bg8.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+.level9 {
+	background: url(../img/bg9.jpg) no-repeat 0 0 !important;
+    background-size: 100% 100% !important;
+}
+#time {
+    margin-top: 10px;
+    padding: 0px !important;
+    width: 240px;
+    border: solid 1px #ff0000;
+}
+#timebar
+{
+    margin: 0px !important;
+    padding: 0px !important;
+    height: 20px;
+    background: url(../img/timebar.png) repeat-y;
+}
+#btnClose
+{
+    padding: 0;
+    margin-top: 4px;
+    margin-right: 7px;
+    margin-left: 7px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    float: right;
+    background: url(../img/btnclose.png) no-repeat 0 0;
+}
+.title {
+    width: 100%;
+    height: 40px;
+    font-size: medium;
+    font-weight: bold;
+    font-family: Roboto,Helvetica, Arial;
+    color: #fff;
+    overflow: hidden;
+    background: url(../img/bar_bg.png) repeat-x;
+}
+.title div {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: center;
+}
+#scoreboard {
+    visibility: hidden;
+    overflow:hidden;
+    position: absolute;
+    width: 672px;
+    height: 468px;
+    background: url(../img/bg_dialog.jpg) no-repeat;
+    border: solid 1px #cccccc;
+}
+#list {
+    overflow:auto;
+    overflow-x:hidden;
+    margin: 10px;
+    height: 400px;
+}
+.highscore-item {
+    width: 100%;
+    height: 40px;
+    font-size: medium;
+    font-weight: normal;
+    font-family: Roboto,Helvetica, Arial;
+    color: #fff;
+}
+.highscore-item div {
+    height: 30px;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: center;
+}
+.highscore-item.odd {
+    background: url(../img/bar_bg.png) repeat-x;
+}
+.highscore-item.even {
+    background: url(../img/bar_bg2.png) repeat-x;
+}
+.highscore-item .rank {
+    float: left;
+    width: 100px;
+}
+.highscore-item .player {
+    float: left;
+    width: 400px;
+}
+.highscore-item .score {
+    float: right;
+    width: 100px;
+}
