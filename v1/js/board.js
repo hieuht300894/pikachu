@@ -2,9 +2,7 @@
  * Created by Linh on 4/1/2017.
  */
 function newBoard() {
-    var parentDiv = document.getElementById('board');
-
-    var div = document.createElement("div");
+    var div = document.getElementById("board");
 
     div.arrPiece = newArray(cols + 2);
     for (var i = 1; i <= cols; i++) {
