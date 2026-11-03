@@ -8,7 +8,7 @@ var PieceWidth = 42;
 var PieceHeight = 52;
 var cols = 16;
 var rows = 9;
-var offsetTop = -26;//header height
+var offsetTop = 0;
 var offsetLeft = 0;
 var maxLevel = 40;
 var winScore = 720;
@@ -27,8 +27,6 @@ function init() {
         document.body.style.zoom = scale;
     }
 
-    offsetLeft = ((screen.width / scale) - (PieceWidth * (cols + 2))) / 2;
-    
     document.getElementById("header").style.visibility = "visible";
 
     checksound = localStorage.getItem("checksound");
