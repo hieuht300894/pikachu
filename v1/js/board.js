@@ -224,9 +224,12 @@ function onPiecePaired() {
     // hide lines
     for (var i = 0; i < 3; i++)
         _board.lines[i].style.visibility = "hidden";
+
     // update score
     _board.currentGame.score += 10;
+
     repaint("txtScore", _board.currentGame.totalScore + _board.currentGame.score);
+
     // check win
     if (_board.currentGame.score == winScore) {
         _board.currentGame.totalScore += _board.currentGame.score + elTimebar.tmp;
@@ -237,28 +240,28 @@ function onPiecePaired() {
             }
         } else {
             alert(['Level completed! Next level is ', _board.currentGame.levelQueue[_board.currentGame.level]].join(''));
-            showAd();
+
             _board.addLife();
             _board.setNewLevel(_board.currentGame.level + 1);
         }
         return;
     }
+
     // repaire matrix
     if (_board.currentGame.level > 1) {
         engine.fixMatrix(_board.arrValue, _board.currentGame.levelQueue[_board.currentGame.level - 1]);
         _board.applyMatrix();
     }
+
     // check no more pair
     if (engine.isEnd(_board.arrValue)) {
         if (_board.currentGame.lives <= 0) {
-            var ok = confirm("You have no lives. Click OK to add more life or Cancel to start new game.");
-            if (ok) {
-                showAd();
-            } else {
-                _board.newGame();
-            }
+            alert("You have no lives.");
+
+            _board.newGame();
         } else {
             alert(getString('txt_nopair', lang));
+
             _board.repairGame();
         }
     }
