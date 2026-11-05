@@ -25,24 +25,6 @@ function newBoard() {
     div.style.width = `${PieceWidth * (cols + 2)}px`;
     div.style.height = `${PieceHeight * (rows + 2)}px`;
 
-    div.setNewLevel = function (newLevel) {
-        this.level = newLevel;
-        this.score = 0;
-        this.isWaiting = false;
-        this.arrValue = engine.getNewMatrix();
-        this.applyMatrix();
-        this.saveGame();
-
-        document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
-
-        repaint("txtGameMode", this.gameMode.name);
-        repaint("txtLevel", [this.level, maxLevel].join('/'));
-        repaint("txtLives", this.lives);
-        repaint("txtScore", this.totalScore);
-
-        onGameLoaded();
-    }
-
     div.newGame = function () {
         if (!confirm("Are you sure you want to start a new game? This will reset your active level progress.")) {
             return;
@@ -156,6 +138,24 @@ function newBoard() {
 
     div.addLife = function () {
         this.setLives(this.lives + 1);
+    }
+
+    div.setNewLevel = function (newLevel) {
+        this.level = newLevel;
+        this.score = 0;
+        this.isWaiting = false;
+        this.arrValue = engine.getNewMatrix();
+        this.applyMatrix();
+        this.saveGame();
+
+        document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
+
+        repaint("txtGameMode", this.gameMode.name);
+        repaint("txtLevel", [this.level, maxLevel].join('/'));
+        repaint("txtLives", this.lives);
+        repaint("txtScore", this.totalScore);
+
+        onGameLoaded();
     }
 
     div.drawPath = function (points) {
