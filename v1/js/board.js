@@ -135,7 +135,16 @@ function newBoard() {
     }
 
     div.addMoreLives = function () {
-        this.setLives(this.currentGame.lives + 1);
+        const tradeLives = 3;
+        const tradeScore = tradeLives * pairedScore;
+
+        if(confirm(`Trade score for lives? You will get +${tradeLives} Lives and your score will decrease by ${tradeScore} points.`)) {
+            this.currentGame.totalScore -= (tradeScore);
+
+            repaint("txtScore", this.currentGame.totalScore);
+            
+            this.setLives(this.currentGame.lives + tradeLives);
+        }
     }
 
     div.setNewLevel = function (newLevel) {
@@ -229,7 +238,7 @@ function onPiecePaired() {
         _board.lines[i].style.visibility = "hidden";
 
     // update score
-    _board.currentGame.score += 10;
+    _board.currentGame.score += pairedScore;
 
     repaint("txtScore", _board.currentGame.totalScore + _board.currentGame.score);
 

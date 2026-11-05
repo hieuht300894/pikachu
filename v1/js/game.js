@@ -13,6 +13,7 @@ var offsetLeft = 0;
 var maxLevel = 40;
 var winScore = 720;
 var scoreCount = 0;
+var pairedScore = 10;
 
 var gameModes = {
     sequently: {
