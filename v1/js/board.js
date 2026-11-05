@@ -35,21 +35,7 @@ function newBoard() {
 
         document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
 
-        switch (this.gameMode) {
-            case gameModes.sequently.id:
-                repaint("txtGameMode", 'Sequence');
-                break;
-            case gameModes.shuffle.id:
-                repaint("txtGameMode", 'Shuffle');
-                break;
-            case gameModes.professional.id:
-                repaint("txtGameMode", 'Professional');
-                break;
-            default:
-                repaint("txtGameMode", 'Unknown');
-                break;
-        }
-
+        repaint("txtGameMode", this.gameMode.name);
         repaint("txtLevel", [this.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);
         repaint("txtScore", this.totalScore);
@@ -62,10 +48,6 @@ function newBoard() {
             return;
         }
 
-        this.level = 1;
-        this.lives = 10;
-        this.totalScore = 0;
-
         const promptMessages = [
             'Select Game Mode:',
             `Enter ${gameModes.sequently.id} for ${gameModes.sequently.name}`,
@@ -73,28 +55,40 @@ function newBoard() {
             `Enter ${gameModes.professional.id} for ${gameModes.professional.name}`,
         ];
 
-        this.gameMode = Number.parseInt(prompt(promptMessages.join('\n'), '')) || gameModes.sequently.id;
+        const gameModeId = Number.parseInt(prompt(promptMessages.join('\n'), gameModes.sequently.id));
 
-        switch (this.gameMode) {
+        const choosenGameModes = [
+            gameModes.sequently,
+            gameModes.shuffle,
+            gameModes.professional,
+        ];
+
+        this.gameMode = { ...choosenGameModes.find(x => x.id === gameModeId) || gameModes.sequently };
+
+        switch (this.gameMode.id) {
             case gameModes.sequently.id:
-                this.levelQueue = initializeSequenceLevel();
+                this.gameMode.levelQueue = initializeSequenceLevel();
                 break;
             case gameModes.shuffle.id:
-                this.levelQueue = initializeShuffleLevel();
+                this.gameMode.levelQueue = initializeShuffleLevel();
                 break;
             case gameModes.professional.id:
-                this.levelQueue = initializeProfessionalLevel();
+                this.gameMode.levelQueue = initializeProfessionalLevel();
                 break;
             default:
-                this.levelQueue = [];
+                this.gameMode.levelQueue = [];
                 break;
         }
 
-        this.levelQueue.splice(this.levelQueue.indexOf(this.level), 1);
-        this.levelQueue.unshift(this.level);
+        this.gameMode.levelQueue.splice(this.gameMode.levelQueue.indexOf(this.gameMode.level), 1);
+        this.gameMode.levelQueue.unshift(this.gameMode.level);
 
-        localStorage.setItem("game_mode", this.gameMode);
-        localStorage.setItem("level_queue", JSON.stringify(this.levelQueue));
+        localStorage.setItem("game_mode", JSON.stringify(this.gameMode));
+
+        this.level = this.gameMode.level;
+        this.lives = this.gameMode.lives;
+        this.levelQueue = this.gameMode.levelQueue;
+        this.totalScore = 0;
 
         this.setLives(this.lives);
         this.setNewLevel(this.level);
@@ -107,17 +101,19 @@ function newBoard() {
     }
 
     div.loadGame = function () {
-        this.gameMode = Number.parseInt(localStorage.getItem("game_mode"));
-        this.levelQueue = JSON.parse(localStorage.getItem('level_queue') || '[]');
-
+        this.gameMode = JSON.parse(localStorage.getItem("game_mode") || JSON.stringify({}));
         this.level = Number.parseInt(localStorage.getItem("level")) || 0;
-        if (!this.gameMode || !this.level || !this.levelQueue.length) {
-            this.newGame();
-        } else {
-            this.totalScore = Number.parseInt(localStorage.getItem("totalscore")) || 0;
-            this.setLives(Number.parseInt(localStorage.getItem("lives")) || 10);
-            this.setNewLevel(this.level);
+        this.lives = Number.parseInt(localStorage.getItem("lives")) || 0;
+        this.totalScore = Number.parseInt(localStorage.getItem("totalscore")) || 0;
+
+        if (!this.gameMode.id || !this.level || !this.lives) {
+            return this.newGame();
         }
+
+        this.levelQueue = this.gameMode.levelQueue;
+
+        this.setLives(this.lives);
+        this.setNewLevel(this.level);
     }
 
     div.repairGame = function () {

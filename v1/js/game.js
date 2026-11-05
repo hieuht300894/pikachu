@@ -19,17 +19,30 @@ var gameModes = {
         id: 1,
         name: 'Sequentially',
         description: 'Play in numerical order',
+        level: 1,
+        lives: 10,
     },
     shuffle: {
         id: 2,
         name: 'Shuffle',
         description: 'Play in a completely random order',
+        level: 1,
+        lives: 10,
     },
     professional: {
         id: 3,
         name: 'Professional',
         description: 'Play from Easiest to Hardest',
+        level: 1,
+        lives: 40,
     },
+};
+
+var currentGame = {
+    level: 0,
+    lives: 0,
+    totalScore: 0,
+    levelQueue: [],
 };
 
 function init() {
