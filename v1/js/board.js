@@ -93,6 +93,8 @@ function newBoard() {
             return this.newGame();
         }
 
+        alert(['Your level is ', _board.currentGame.levelQueue[_board.currentGame.level - 1]].join(''));
+
         this.setLives(this.currentGame.lives);
         this.setNewLevel(this.currentGame.level);
     }
