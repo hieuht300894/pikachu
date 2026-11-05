@@ -93,9 +93,9 @@ function newBoard() {
 
     div.repairGame = function () {
         if (this.currentGame.lives <= 0) {
-            var ok = confirm("You have no lives. Click OK to add more life or Cancel to return.");
-            if (ok) showAd();
-        } else {
+            alert("You have no lives.");
+        }
+        else {
             engine.repairMatrix(this.arrValue);
             this.applyMatrix();
             this.setLives(this.currentGame.lives - 1);
