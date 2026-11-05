@@ -92,13 +92,12 @@ function newBoard() {
     }
 
     div.repairGame = function () {
-        if (this.currentGame.lives <= 0) {
-            alert("You have no lives.");
-        }
-        else {
+        if (this.currentGame.lives > 0) {
             engine.repairMatrix(this.arrValue);
+
             this.applyMatrix();
             this.setLives(this.currentGame.lives - 1);
+            
             playAudio(SOUND.GameRepaired);
         }
     }

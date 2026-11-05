@@ -81,6 +81,10 @@ function change() {
     _board.repairGame();
 }
 
+function addMoreLives() {
+
+}
+
 function showHighscore() {
     paused = true;
     if (scrollID > 0) clearInterval(scrollID);
