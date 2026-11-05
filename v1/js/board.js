@@ -137,7 +137,7 @@ function newBoard() {
     div.addMoreLives = function () {
         const tradeLives = Number.parseInt(prompt('How many lives do you want to trade?', 1));
 
-        const tradeScore = [...Array(tradeLives).keys()].map(x => x + 1).reduce((accumulator, currentValue) => accumulator + currentValue * pairedScore, 0);
+        const tradeScore = [...Array(tradeLives).keys()].map(x => x + 1).reduce((accumulator, currentValue) => accumulator + currentValue * pairedScore * 100, 0);
 
         if (confirm(`Trade score for lives? You will get +${tradeLives} Lives and your score will decrease by ${tradeScore} points.`)) {
             this.currentGame.totalScore -= (tradeScore);
