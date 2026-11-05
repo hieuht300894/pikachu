@@ -85,7 +85,7 @@ function newBoard() {
             return this.newGame();
         }
 
-        alert(['Your level is ', _board.currentGame.levelQueue[_board.currentGame.level - 1]].join(''));
+        alert(['Your level is ', this.currentGame.levelQueue[this.currentGame.level - 1]].join(''));
 
         this.setLives(this.currentGame.lives);
         this.setNewLevel(this.currentGame.level);
@@ -96,7 +96,7 @@ function newBoard() {
             var ok = confirm("You have no lives. Click OK to add more life or Cancel to return.");
             if (ok) showAd();
         } else {
-            engine.repairMatrix(_board.arrValue);
+            engine.repairMatrix(this.arrValue);
             this.applyMatrix();
             this.setLives(this.currentGame.lives - 1);
             playAudio(SOUND.GameRepaired);
