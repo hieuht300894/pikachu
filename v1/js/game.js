@@ -48,14 +48,6 @@ function init() {
 
     document.getElementById("header").style.visibility = "visible";
 
-    checksound = localStorage.getItem("check_sound") || checksound;
-    if (checksound.toString().toLowerCase() === true.toString().toLowerCase()) {
-        checksound = true;
-    }
-    else {
-        checksound = false;
-    }
-
     changeSound(checksound);
 
     var list = new Array;

@@ -39,8 +39,6 @@ function changeSound(status) {
         checksound = !checksound;
     }
 
-    localStorage.setItem("check_sound", checksound);
-
     if (checksound) {
         document.getElementById("btnChangeSound").setAttribute("class", "soundOn");
     }
