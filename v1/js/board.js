@@ -45,23 +45,15 @@ function newBoard() {
             gameModes.professional,
         ];
 
+        const initialLevelQueues = new Map([
+            [gameModes.sequently.id, initializeSequenceLevel],
+            [gameModes.shuffle.id, initializeShuffleLevel],
+            [gameModes.professional.id, initializeProfessionalLevel],
+        ]);
+
         this.gameMode = { ...choosenGameModes.find(x => x.id === gameModeId) || gameModes.sequently };
 
-        switch (this.gameMode.id) {
-            case gameModes.sequently.id:
-                this.gameMode.levelQueue = initializeSequenceLevel();
-                break;
-            case gameModes.shuffle.id:
-                this.gameMode.levelQueue = initializeShuffleLevel();
-                break;
-            case gameModes.professional.id:
-                this.gameMode.levelQueue = initializeProfessionalLevel();
-                break;
-            default:
-                this.gameMode.levelQueue = [];
-                break;
-        }
-
+        this.gameMode.levelQueue = initialLevelQueues.get(this.gameMode.id)() || [];
         this.gameMode.levelQueue.splice(this.gameMode.levelQueue.indexOf(this.gameMode.level), 1);
         this.gameMode.levelQueue.unshift(this.gameMode.level);
 
