@@ -136,7 +136,7 @@ function newBoard() {
 
     div.addMoreLives = function () {
         const tradeLives = 3;
-        const tradeScore = tradeLives * pairedScore;
+        const tradeScore = tradeLives * pairedScore * this.currentGame.level;
 
         if(confirm(`Trade score for lives? You will get +${tradeLives} Lives and your score will decrease by ${tradeScore} points.`)) {
             this.currentGame.totalScore -= (tradeScore);
