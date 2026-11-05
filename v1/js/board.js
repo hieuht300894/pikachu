@@ -146,7 +146,7 @@ function newBoard() {
         if (confirm(`Trade score for lives? You will get +${tradeLives} Lives and your score will decrease by ${tradeScore} points.`)) {
             this.currentGame.totalScore -= (tradeScore);
 
-            repaint("txtScore", this.currentGame.totalScore);
+            repaint("txtScore", `${this.currentGame.totalScore} (+${this.currentGame.score})`);
 
             this.setLives(this.currentGame.lives + tradeLives);
         }
@@ -163,9 +163,9 @@ function newBoard() {
         document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
 
         repaint("txtGameMode", this.gameMode.name);
-        repaint("txtLevel", [this.currentGame.level, maxLevel].join('/'));
         repaint("txtLives", this.currentGame.lives);
-        repaint("txtScore", this.currentGame.totalScore);
+        repaint("txtLevel", `${this.currentGame.level}/${maxLevel}`);
+        repaint("txtScore", `${this.currentGame.totalScore} (+${this.currentGame.score})`);
 
         onGameLoaded();
     }
@@ -245,7 +245,7 @@ function onPiecePaired() {
     // update score
     _board.currentGame.score += pairedScore;
 
-    repaint("txtScore", _board.currentGame.totalScore + _board.currentGame.score);
+    repaint("txtScore", `${_board.currentGame.totalScore} (+${_board.currentGame.score})`);
 
     // check win
     if (_board.currentGame.score == winScore) {
