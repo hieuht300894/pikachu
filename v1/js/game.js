@@ -1,5 +1,5 @@
 var _board;
-var checksound = true;
+var checksound = false;
 var timeID = 0;
 var scrollID = 0;
 var maxTime = 480;
@@ -48,12 +48,15 @@ function init() {
 
     document.getElementById("header").style.visibility = "visible";
 
-    checksound = localStorage.getItem("check_sound") || false;
+    checksound = localStorage.getItem("check_sound") || checksound;
     if (checksound.toString().toLowerCase() === true.toString().toLowerCase()) {
         checksound = true;
     }
+    else {
+        checksound = false;
+    }
 
-    changeSound();
+    changeSound(checksound);
 
     var list = new Array;
     var i;

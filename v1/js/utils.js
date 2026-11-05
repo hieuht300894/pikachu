@@ -30,15 +30,23 @@ function playAudio(file) {
     pid.play();
 
 }
-function changeSound() {
+
+function changeSound(status) {
+    if ([true, false].includes(status)) {
+        checksound = status;
+    }
+    else {
+        checksound = !checksound;
+    }
+
+    localStorage.setItem("check_sound", checksound);
+
     if (checksound) {
-        checksound = false;
-        document.getElementById("btnChangeSound").setAttribute("class", "soundOff");
-    } else {
-        checksound = true;
         document.getElementById("btnChangeSound").setAttribute("class", "soundOn");
     }
-    localStorage.setItem("check_sound", checksound);
+    else {
+        document.getElementById("btnChangeSound").setAttribute("class", "soundOff");
+    }
 }
 
 function repaint(id, value) {
