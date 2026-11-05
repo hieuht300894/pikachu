@@ -48,11 +48,13 @@ function init() {
 
     document.getElementById("header").style.visibility = "visible";
 
-    checksound = localStorage.getItem("checksound");
-    if (checksound == null || checksound == undefined) {
+    checksound = localStorage.getItem("check_sound") || false;
+    if (checksound.toString().toLowerCase() === true.toString().toLowerCase()) {
         checksound = true;
     }
+
     changeSound();
+
     var list = new Array;
     var i;
     for (i = 1; i <= 36; i++) list.push(getImagePath(i));

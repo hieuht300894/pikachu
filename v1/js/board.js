@@ -68,56 +68,43 @@ function newBoard() {
         localStorage.setItem("game_mode", JSON.stringify(this.gameMode));
 
         this.currentGame = {
+            id: Date.now(),
+            lives: this.gameMode.lives,
             level: this.gameMode.level,
-            lives: 0,
+            levelQueue: this.gameMode.levelQueue,
+            score: 0,
             totalScore: 0,
-            levelQueue: [],
         };
 
-        this.lives = this.gameMode.lives;
-        this.levelQueue = this.gameMode.levelQueue;
-        this.totalScore = 0;
-
-        this.setLives(this.lives);
+        this.saveGame();
+        this.setLives(this.currentGame.lives);
         this.setNewLevel(this.currentGame.level);
     }
 
     div.saveGame = function () {
-        localStorage.setItem("level", this.currentGame.level);
-        localStorage.setItem("lives", this.lives);
-        localStorage.setItem("totalscore", this.totalScore);
+        localStorage.setItem("current_game", JSON.stringify(this.currentGame));
     }
 
     div.loadGame = function () {
         this.gameMode = JSON.parse(localStorage.getItem("game_mode") || JSON.stringify({}));
+        this.currentGame = JSON.parse(localStorage.getItem("current_game") || JSON.stringify({}));
 
-        this.currentGame = {
-            level: Number.parseInt(localStorage.getItem("level")) || 0,
-            lives: 0,
-            totalScore: 0,
-            levelQueue: [],
-        };
-        this.lives = Number.parseInt(localStorage.getItem("lives")) || 0;
-        this.totalScore = Number.parseInt(localStorage.getItem("totalscore")) || 0;
-
-        if (!this.gameMode.id || !this.currentGame.level || !this.lives) {
+        if (!this.gameMode.id || !this.currentGame.id) {
             return this.newGame();
         }
 
-        this.levelQueue = this.gameMode.levelQueue;
-
-        this.setLives(this.lives);
+        this.setLives(this.currentGame.lives);
         this.setNewLevel(this.currentGame.level);
     }
 
     div.repairGame = function () {
-        if (this.lives <= 0) {
+        if (this.currentGame.lives <= 0) {
             var ok = confirm("You have no lives. Click OK to add more life or Cancel to return.");
             if (ok) showAd();
         } else {
             engine.repairMatrix(_board.arrValue);
             this.applyMatrix();
-            this.setLives(this.lives - 1);
+            this.setLives(this.currentGame.lives - 1);
             playAudio(SOUND.GameRepaired);
         }
     }
@@ -138,10 +125,12 @@ function newBoard() {
     }
 
     div.setLives = function (val) {
-        if (val == null || val == undefined || val == NaN) val = 10;
-        this.lives = val;
-        localStorage.setItem("lives", this.lives);
-        repaint("txtLives", this.lives);
+        this.currentGame.lives = val;
+
+        this.saveGame();
+
+        repaint("txtLives", this.currentGame.lives);
+
         if (val > 0)
             document.getElementById("btnChange").disabled = false;
         else
@@ -149,12 +138,12 @@ function newBoard() {
     }
 
     div.addLife = function () {
-        this.setLives(this.lives + 1);
+        this.setLives(this.currentGame.lives + 1);
     }
 
     div.setNewLevel = function (newLevel) {
         this.currentGame.level = newLevel;
-        this.score = 0;
+        this.currentGame.score = 0;
         this.isWaiting = false;
         this.arrValue = engine.getNewMatrix();
         this.applyMatrix();
@@ -164,8 +153,8 @@ function newBoard() {
 
         repaint("txtGameMode", this.gameMode.name);
         repaint("txtLevel", [this.currentGame.level, maxLevel].join('/'));
-        repaint("txtLives", this.lives);
-        repaint("txtScore", this.totalScore);
+        repaint("txtLives", this.currentGame.lives);
+        repaint("txtScore", this.currentGame.totalScore);
 
         onGameLoaded();
     }
@@ -242,18 +231,18 @@ function onPiecePaired() {
     for (var i = 0; i < 3; i++)
         _board.lines[i].style.visibility = "hidden";
     // update score
-    _board.score += 10;
-    repaint("txtScore", _board.totalScore + _board.score);
+    _board.currentGame.score += 10;
+    repaint("txtScore", _board.currentGame.totalScore + _board.currentGame.score);
     // check win
-    if (_board.score == winScore) {
-        _board.totalScore += _board.score + elTimebar.tmp;
+    if (_board.currentGame.score == winScore) {
+        _board.currentGame.totalScore += _board.currentGame.score + elTimebar.tmp;
         if (_board.currentGame.level == maxLevel) {
             var player = prompt("You win. Please enter your name", "");
             if (player != null) {
                 _board.newGame();
             }
         } else {
-            alert(['Level completed! Next level is ', _board.levelQueue[_board.currentGame.level]].join(''));
+            alert(['Level completed! Next level is ', _board.currentGame.levelQueue[_board.currentGame.level]].join(''));
             showAd();
             _board.addLife();
             _board.setNewLevel(_board.currentGame.level + 1);
@@ -262,12 +251,12 @@ function onPiecePaired() {
     }
     // repaire matrix
     if (_board.currentGame.level > 1) {
-        engine.fixMatrix(_board.arrValue, _board.levelQueue[_board.currentGame.level - 1]);
+        engine.fixMatrix(_board.arrValue, _board.currentGame.levelQueue[_board.currentGame.level - 1]);
         _board.applyMatrix();
     }
     // check no more pair
     if (engine.isEnd(_board.arrValue)) {
-        if (_board.lives <= 0) {
+        if (_board.currentGame.lives <= 0) {
             var ok = confirm("You have no lives. Click OK to add more life or Cancel to start new game.");
             if (ok) {
                 showAd();

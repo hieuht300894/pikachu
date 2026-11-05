@@ -9,7 +9,7 @@ var SOUND = {
 };
 
 function setAudioElement(pn, file) {
-    if (typeof(file) == 'undefined')
+    if (typeof (file) == 'undefined')
         file = pn;
     var html = "<source src='sound/" + file + ".mp3' />";
     html += "<source src='sound/" + file + ".ogg' />";
@@ -31,15 +31,14 @@ function playAudio(file) {
 
 }
 function changeSound() {
-    var change_soundID = document.getElementById("btnChangeSound");
     if (checksound) {
         checksound = false;
-        change_soundID.setAttribute("class", "soundOff");
+        document.getElementById("btnChangeSound").setAttribute("class", "soundOff");
     } else {
         checksound = true;
-        change_soundID.setAttribute("class", "soundOn");
+        document.getElementById("btnChangeSound").setAttribute("class", "soundOn");
     }
-    localStorage.setItem("checksound", checksound);
+    localStorage.setItem("check_sound", checksound);
 }
 
 function repaint(id, value) {
