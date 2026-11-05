@@ -97,7 +97,7 @@ function newBoard() {
 
             this.applyMatrix();
             this.setLives(this.currentGame.lives - 1);
-            
+
             playAudio(SOUND.GameRepaired);
         }
     }
@@ -131,6 +131,10 @@ function newBoard() {
     }
 
     div.addLife = function () {
+        this.setLives(this.currentGame.lives + 1);
+    }
+
+    div.addMoreLives = function () {
         this.setLives(this.currentGame.lives + 1);
     }
 

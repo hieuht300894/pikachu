@@ -77,12 +77,12 @@ function replay() {
     _board.newGame();
 }
 
-function change() {
+function repairGame() {
     _board.repairGame();
 }
 
 function addMoreLives() {
-
+    _board.addMoreLives();
 }
 
 function showHighscore() {
