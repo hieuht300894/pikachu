@@ -42,7 +42,6 @@ var currentGame = {
     level: 0,
     lives: 0,
     totalScore: 0,
-    levelQueue: [],
 };
 
 function init() {
