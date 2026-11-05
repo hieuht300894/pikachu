@@ -38,13 +38,6 @@ var gameModes = {
     },
 };
 
-var currentGame = {
-    level: 0,
-    lives: 0,
-    totalScore: 0,
-    levelQueue: [],
-};
-
 function init() {
     var minHeight = PieceHeight * (rows + 2);
     var windowHeight = window.innerHeight;

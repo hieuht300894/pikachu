@@ -67,35 +67,47 @@ function newBoard() {
 
         localStorage.setItem("game_mode", JSON.stringify(this.gameMode));
 
-        this.level = this.gameMode.level;
+        this.currentGame = {
+            level: this.gameMode.level,
+            lives: 0,
+            totalScore: 0,
+            levelQueue: [],
+        };
+
         this.lives = this.gameMode.lives;
         this.levelQueue = this.gameMode.levelQueue;
         this.totalScore = 0;
 
         this.setLives(this.lives);
-        this.setNewLevel(this.level);
+        this.setNewLevel(this.currentGame.level);
     }
 
     div.saveGame = function () {
-        localStorage.setItem("level", this.level);
+        localStorage.setItem("level", this.currentGame.level);
         localStorage.setItem("lives", this.lives);
         localStorage.setItem("totalscore", this.totalScore);
     }
 
     div.loadGame = function () {
         this.gameMode = JSON.parse(localStorage.getItem("game_mode") || JSON.stringify({}));
-        this.level = Number.parseInt(localStorage.getItem("level")) || 0;
+
+        this.currentGame = {
+            level: Number.parseInt(localStorage.getItem("level")) || 0,
+            lives: 0,
+            totalScore: 0,
+            levelQueue: [],
+        };
         this.lives = Number.parseInt(localStorage.getItem("lives")) || 0;
         this.totalScore = Number.parseInt(localStorage.getItem("totalscore")) || 0;
 
-        if (!this.gameMode.id || !this.level || !this.lives) {
+        if (!this.gameMode.id || !this.currentGame.level || !this.lives) {
             return this.newGame();
         }
 
         this.levelQueue = this.gameMode.levelQueue;
 
         this.setLives(this.lives);
-        this.setNewLevel(this.level);
+        this.setNewLevel(this.currentGame.level);
     }
 
     div.repairGame = function () {
@@ -141,7 +153,7 @@ function newBoard() {
     }
 
     div.setNewLevel = function (newLevel) {
-        this.level = newLevel;
+        this.currentGame.level = newLevel;
         this.score = 0;
         this.isWaiting = false;
         this.arrValue = engine.getNewMatrix();
@@ -151,7 +163,7 @@ function newBoard() {
         document.body.setAttribute("class", ["level", Math.floor(Math.random() * 9) + 1].join(''));
 
         repaint("txtGameMode", this.gameMode.name);
-        repaint("txtLevel", [this.level, maxLevel].join('/'));
+        repaint("txtLevel", [this.currentGame.level, maxLevel].join('/'));
         repaint("txtLives", this.lives);
         repaint("txtScore", this.totalScore);
 
@@ -235,22 +247,22 @@ function onPiecePaired() {
     // check win
     if (_board.score == winScore) {
         _board.totalScore += _board.score + elTimebar.tmp;
-        if (_board.level == maxLevel) {
+        if (_board.currentGame.level == maxLevel) {
             var player = prompt("You win. Please enter your name", "");
             if (player != null) {
                 _board.newGame();
             }
         } else {
-            alert(['Level completed! Next level is ', _board.levelQueue[_board.level]].join(''));
+            alert(['Level completed! Next level is ', _board.levelQueue[_board.currentGame.level]].join(''));
             showAd();
             _board.addLife();
-            _board.setNewLevel(_board.level + 1);
+            _board.setNewLevel(_board.currentGame.level + 1);
         }
         return;
     }
     // repaire matrix
-    if (_board.level > 1) {
-        engine.fixMatrix(_board.arrValue, _board.levelQueue[_board.level - 1]);
+    if (_board.currentGame.level > 1) {
+        engine.fixMatrix(_board.arrValue, _board.levelQueue[_board.currentGame.level - 1]);
         _board.applyMatrix();
     }
     // check no more pair
