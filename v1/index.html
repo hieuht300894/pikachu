@@ -1,13 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+
 <head>
-    <title>Pikachu</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta id="viewport" name="viewport" content="height=device-height,width=device-width, initial-scale=1, minimum-scale=0.1, maximum-scale=1.0, user-scalable=no" />
-    <link type="text/css" rel="Stylesheet" href="css/style.css">
+	<title>Pikachu</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta id="viewport" name="viewport"
+		content="height=device-height,width=device-width, initial-scale=1, minimum-scale=0.1, maximum-scale=1.0, user-scalable=no" />
+	<link type="text/css" rel="Stylesheet" href="css/style.css">
 </head>
-<body  onload="onLoad()">
-	<div id="header">
+
+<body onload="onLoad()">
+	<div id="header" style="position: relative; z-index: 2;">
 		<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
 		<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
 		<div class="separator"></div>
@@ -19,13 +23,15 @@
 		<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
 		<div class="separator"></div>
 		<div><span id="lblTime">TIME</span>&nbsp;</div>
-		<div id="time"><div id="timebar"></div></div>
+		<div id="time">
+			<div id="timebar"></div>
+		</div>
 		<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
 		<div class="separator"></div>
 		<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
 		<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
 	</div>
-	<div id="maintable">
+	<div id="maintable" style="position: relative; z-index: 1;">
 		<div id="board"></div>
 		<div id="scoreboard">
 			<div class="title">
@@ -48,8 +54,18 @@
 	<script type="text/javascript" src="js/utils.js"></script>
 	<script type="text/javascript" src="js/ip.js"></script>
 	<script type="text/javascript" src="js/res.js"></script>
-	<audio id="audiosound2"><source src="sound/sound2.mp3"><source src="sound/sound2.ogg"></audio>
-	<audio id="audiosound1"><source src="sound/sound1.mp3"><source src="sound/sound1.ogg"></audio>
-	<audio id="audiosound4"><source src="sound/sound4.mp3"><source src="sound/sound4.ogg"></audio>
+	<audio id="audiosound2">
+		<source src="sound/sound2.mp3">
+		<source src="sound/sound2.ogg">
+	</audio>
+	<audio id="audiosound1">
+		<source src="sound/sound1.mp3">
+		<source src="sound/sound1.ogg">
+	</audio>
+	<audio id="audiosound4">
+		<source src="sound/sound4.mp3">
+		<source src="sound/sound4.ogg">
+	</audio>
 </body>
+
 </html>
