@@ -13,59 +13,34 @@
 <body onload="onLoad()">
 	<table class="w-100">
 		<thead>
-			<tr id="header">
+			<tr>
 				<th>
-					<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
-				</th>
-				<th>
-					<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
-				</th>
-				<th>
-					<div class="separator"></div>
-				</th>
-				<th>
-					<div><span id="lblLevel">Progress</span>:&nbsp;<span id="txtLevel"></span></div>
-				</th>
-				<th>
-					<div class="separator"></div>
-				</th>
-				<th>
-					<div><span id="lblScore">Score</span>:&nbsp;<span id="txtScore"></span></div>
-				</th>
-				<th>
-					<div class="separator"></div>
-				</th>
-				<th>
-					<div><span id="lblLives">Lives</span>:&nbsp;<span id="txtLives"></span>&nbsp;</div>
-				</th>
-				<th>
-					<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
-				</th>
-				<th>
-					<div><span id="lblTime">TIME</span>&nbsp;</div>
-				</th>
-				<th>
-					<div id="time">
-						<div id="timebar"></div>
+					<div id="header" style="display: flex; align-items: center;">
+						<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
+						<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
+						<div class="separator"></div>
+						<div><span id="lblLevel">Progress</span>:&nbsp;<span id="txtLevel"></span></div>
+						<div class="separator"></div>
+						<div><span id="lblScore">Score</span>:&nbsp;<span id="txtScore"></span></div>
+						<div class="separator"></div>
+						<div><span id="lblLives">Lives</span>:&nbsp;<span id="txtLives"></span>&nbsp;</div>
+						<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
+						<div class="separator"></div>
+						<div><span id="lblTime">TIME</span>&nbsp;</div>
+						<div id="time">
+							<div id="timebar"></div>
+						</div>
+						<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
+						<div class="separator"></div>
+						<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
+						<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
 					</div>
-				</th>
-				<th>
-					<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
-				</th>
-				<th>
-					<div class="separator"></div>
-				</th>
-				<th>
-					<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
-				</th>
-				<th>
-					<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="17">
+				<td>
 					<div id="maintable">
 						<div id="board"></div>
 						<div id="scoreboard">
