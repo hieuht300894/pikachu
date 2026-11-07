@@ -15,8 +15,7 @@ function newBoard() {
     div.lines = new Array;
     for (var i = 0; i < 3; i++) {
         div.lines[i] = document.createElement("div");
-        div.lines[i].style.position = "absolute";
-        div.lines[i].style.backgroundColor = "red";
+        div.lines[i].classList.add('line-connector');
         div.lines[i].style.visibility = "hidden";
         div.appendChild(div.lines[i]);
     }
