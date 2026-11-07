@@ -52,7 +52,7 @@ body {
     background: url("../img/separator.png") repeat-x;
 }
 
-#headerButtons {
+#actionButtons {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -60,7 +60,7 @@ body {
     background: url(../img/bar_bg.png) repeat;
 }
 
-#headerButtons input {
+#actionButtons input {
     float: left;
     margin: 8px;
     padding: 0px;
