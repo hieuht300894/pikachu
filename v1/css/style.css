@@ -260,3 +260,8 @@ body {
     float: right;
     width: 100px;
 }
+
+.line-connector {
+    position:absolute;
+    background-color: red;
+}

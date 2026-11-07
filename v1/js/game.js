@@ -71,9 +71,6 @@ function play() {
     elements.board.style.left = `${(elements.maintable.clientWidth - elements.board.clientWidth) / 2}px`;
 
     elements.maintable.style.visibility = "visible";
-    // elements.maintable.style.height = `${elements.body.clientHeight - elements.header.clientHeight}px`;
-    // elements.maintable.style.marginTop = `${elements.header.clientHeight}px`;
-    // elements.maintable.style.marginTop = `${(elements.body.clientHeight - elements.maintable.clientHeight - elements.header.clientHeight) / 2}px`;
 }
 
 function replay() {
