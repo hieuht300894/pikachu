@@ -10,7 +10,7 @@
 	<link type="text/css" rel="Stylesheet" href="css/style.css">
 </head>
 
-<body onload="onLoad()">
+<body onload="onLoad()" style="display: flex; flex-direction: column; margin: 0;">
 	<div id="header">
 		<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
 		<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
@@ -31,7 +31,7 @@
 		<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
 		<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
 	</div>
-	<div id="maintable">
+	<div id="maintable" style="flex: 1;">
 		<div id="board"></div>
 		<div id="scoreboard">
 			<div class="title">

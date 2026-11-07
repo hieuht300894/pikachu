@@ -24,6 +24,7 @@ function newBoard() {
     div.style.position = 'relative';
     div.style.width = `${PieceWidth * (cols + 2)}px`;
     div.style.height = `${PieceHeight * (rows + 2)}px`;
+    div.style.marginTop = `${PieceHeight * -1}px`;
 
     div.newGame = function () {
         if (!confirm("Are you sure you want to start a new game? This will reset your active level progress.")) {
