@@ -12,9 +12,9 @@
 
 <body onload="onLoad()">
 	<table class="w-100">
-		<tbody>
+		<thead>
 			<tr>
-				<td colspan="2">
+				<th colspan="2">
 					<!-- Main header container set to flex row -->
 					<div id="header">
 						<!-- GAME STATS ONLY: The rest of the elements are kept as they were -->
@@ -26,8 +26,10 @@
 						<div><span id="lblScore">Score</span>:&nbsp;<span id="txtScore"></span></div>
 						<div><span id="lblLives">Lives</span>:&nbsp;<span id="txtLives"></span>&nbsp;</div>
 					</div>
-				</td>
+				</th>
 			</tr>
+		</thead>
+		<tbody>
 			<tr>
 				<!-- Forces the browser to ignore the 523px calculated layout and snap tightly around the buttons -->
 				<td>
