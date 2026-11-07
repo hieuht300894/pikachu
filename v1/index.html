@@ -11,7 +11,7 @@
 </head>
 
 <body onload="onLoad()">
-	<div id="header" style="position: relative; z-index: 2;">
+	<div id="header" style="position: fixed; z-index: 2;">
 		<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
 		<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
 		<div class="separator"></div>
@@ -31,7 +31,7 @@
 		<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
 		<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
 	</div>
-	<div id="maintable" style="position: relative; z-index: 1;">
+	<div id="maintable">
 		<div id="board"></div>
 		<div id="scoreboard">
 			<div class="title">

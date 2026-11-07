@@ -130,12 +130,22 @@ function newBoard() {
             document.getElementById("btnChange").disabled = true;
     }
 
-    div.addLife = function () {
-        this.setLives(this.currentGame.lives + 1);
+    div.addLife = function (total) {
+        total = total || 1;
+
+        this.setLives(this.currentGame.lives + total);
     }
 
     div.addMoreLives = function () {
-        const tradeLives = Number.parseInt(prompt('How many lives do you want to trade?', 1));
+        const promptValue = prompt('How many lives do you want to trade?', 1);
+        if (promptValue === null) {
+            return;
+        }
+
+        const tradeLives = Number.parseInt(promptValue);
+        if (tradeLives <= 0) {
+            return alert("The input must be greater than 0!");
+        }
 
         const tradeScore = [...Array(tradeLives).keys()].map(x => x + 1).reduce((accumulator, currentValue) => accumulator + currentValue * pairedScore * 10, 0);
 
@@ -148,7 +158,7 @@ function newBoard() {
 
             repaint("txtScore", `${this.currentGame.totalScore} (+${this.currentGame.score})`);
 
-            this.setLives(this.currentGame.lives + tradeLives);
+            this.addLife(tradeLives);
         }
     }
 
