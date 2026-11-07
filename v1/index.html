@@ -14,7 +14,7 @@
 	<table class="w-100">
 		<tbody>
 			<tr>
-				<td>
+				<td colspan="2">
 					<!-- Main header container set to flex row -->
 					<div id="header" style="display: flex; align-items: center; width: 100%;">
 						<!-- GAME STATS ONLY: The rest of the elements are kept as they were -->
@@ -35,19 +35,17 @@
 			</tr>
 <tr>
 	<!-- Forces the browser to ignore the 523px calculated layout and snap tightly around the buttons -->
-	<td style="width: 0.1%;">
-		<div id="headerButtons" style="display: flex; align-items: center;">
-			<div style="display: flex; flex-direction: column; align-items: flex-start;">
-				<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
-				<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
-				<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
-				<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
-				<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
-			</div>
+	<td>
+		<div id="headerButtons">
+			<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
+			<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
+			<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
+			<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
+			<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
 		</div>
 	</td>
 	<!-- Stretches to fill everything else -->
-	<td style="width: 100%;">
+	<td class="w-100">
 		<div id="maintable">
 			<div id="board"></div>
 			<div id="scoreboard">

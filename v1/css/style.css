@@ -61,6 +61,14 @@ body {
     background: url("../img/separator.png") repeat-x;
 }
 
+#headerButtons {
+    height: 160px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: stretch; 
+    justify-content: space-between;
+}
+
 #headerButtons input {
     float: left;
     margin-right: 7px;
