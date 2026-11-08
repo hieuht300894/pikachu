@@ -192,19 +192,26 @@ function decTime() {
 }
 
 function displayTimeLeft() {
-    const element = document.getElementById("time");
+    var element = document.getElementById("time");
 
-    const minutes = Math.floor(timeBar.current / 60);
-    const seconds = timeBar.current % 60;
+    var minutes = Math.floor(timeBar.current / 60);
+    var seconds = timeBar.current % 60;
 
-    element.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    // Fix 1: Manual zero-padding (replacing padStart)
+    var minutesStr = minutes < 10 ? '0' + minutes : minutes;
+    var secondsStr = seconds < 10 ? '0' + seconds : seconds;
 
-    timeBar.statuses.forEach((v, k) => {
+    // Fix 2: Traditional string concatenation (replacing template literals)
+    element.textContent = minutesStr + ':' + secondsStr;
+
+    // Fix 3: Standard anonymous function (replacing the arrow function)
+    timeBar.statuses.forEach(function (v, k) {
         if (k(timeBar.current)) {
             element.style.color = v;
         }
     });
 }
+
 
 function rewardLife() {
     _board.addLife();
