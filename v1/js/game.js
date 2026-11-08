@@ -162,33 +162,30 @@ function scrolllist() {
 
 function onGameLoaded() {
     playAudio(SOUND.GameLoaded);
+
     if (timeID > 0) clearInterval(timeID);
+
     timeBar.current = timeBar.maximum;
 
-    const elTimebarText = document.getElementById("timebarText");
-    elTimebarText.textContent = timeBar.current;
-
-    const elTimebar = document.getElementById("timebar");
-    elTimebar.style.width = `${((timeBar.current * 100) / timeBar.maximum)}%`;
+    document.getElementById("time").textContent = timeBar.current;
 
     timeID = setInterval("decTime()", 1000);
 }
 
 function decTime() {
     if (paused) return;
+
     timeBar.current--;
 
-    const elTimebarText = document.getElementById("timebarText");
-    elTimebarText.textContent = timeBar.current;
-
-    const elTimebar = document.getElementById("timebar");
-    elTimebar.style.width = `${((timeBar.current * 100) / timeBar.maximum)}%`;
+    document.getElementById("time").textContent = timeBar.current;
 
     if (timeBar.current == 0) {
         alert(getString('txt_gameover', lang));
         replay();
     }
 }
+
+
 
 function rewardLife() {
     _board.addLife();

@@ -139,27 +139,6 @@ body {
     background-size: 100% 100% !important;
 }
 
-#time {
-    position: relative;
-    border: solid 1px;
-    height: 1.0rem;
-}
-
-#timebar {
-    position: absolute;
-    z-index: 1;
-    background: url(../img/timebar.png);
-    background-size: contain;
-    transition: width 1s linear;
-    height: 1.0rem;
-}
-
-#timebarText {
-    position: absolute;
-    z-index: 2;
-    color: #7F7F7F;
-}
-
 #btnClose {
     padding: 0;
     margin-top: 4px;
@@ -250,6 +229,6 @@ body {
 }
 
 .line-connector {
-    position:absolute;
+    position: absolute;
     background-color: #f54545;
 }
