@@ -40,9 +40,38 @@
 						<tbody>
 							<tr>
 								<td>
-									<input type="button" class="menu-button" name="Button" id="btnNewGame" onclick="replay()">
+									<table>
+										<tbody>
+											<tr>
+												<td>
+													<input type="button" class="menu-button" name="Button" id="btnNewGame" onclick="replay()">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="button" class="menu-button" name="Button" id="btnAddLife" onclick="addMoreLives()">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="button" class="menu-button" name="Button" id="btnChange" onclick="repairGame()">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="button" class="menu-button" name="Button" id="btnHighscore" onclick="showHighscore()">
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<input type="button" class="menu-button soundOn" name="Button" id="btnChangeSound"
+														onclick="changeSound()">
+												</td>
+											</tr>
+										</tbody>
+									</table>
 								</td>
-								<td rowspan="5">
+								<td>
 									<div id="maintable">
 										<div id="board"></div>
 										<div id="scoreboard">
@@ -54,26 +83,6 @@
 											</div>
 										</div>
 									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="button" class="menu-button" name="Button" id="btnAddLife" onclick="addMoreLives()">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="button" class="menu-button" name="Button" id="btnChange" onclick="repairGame()">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="button" class="menu-button" name="Button" id="btnHighscore" onclick="showHighscore()">
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="button" class="menu-button soundOn" name="Button" id="btnChangeSound" onclick="changeSound()">
 								</td>
 							</tr>
 						</tbody>
