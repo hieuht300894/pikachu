@@ -157,8 +157,7 @@ body {
 #timebarText {
     position: absolute;
     z-index: 2;
-    top: 0;
-    color: #000000;
+    color: #7F7F7F;
 }
 
 #btnClose {
