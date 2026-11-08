@@ -51,7 +51,7 @@ function newBoard() {
             [gameModes.professional.id, initializeProfessionalLevel],
         ]);
 
-        this.gameMode = { ...choosenGameModes.find(x => x.id === gameModeId) || gameModes.sequently };
+        this.gameMode = JSON.parse(JSON.stringify(choosenGameModes.find(x => x.id === gameModeId) || gameModes.sequently));
 
         this.gameMode.levelQueue = initialLevelQueues.get(this.gameMode.id)() || [];
         this.gameMode.levelQueue.splice(this.gameMode.levelQueue.indexOf(this.gameMode.level), 1);
