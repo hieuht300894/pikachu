@@ -194,8 +194,10 @@ function decTime() {
 function displayTimeLeft() {
     const element = document.getElementById("time");
 
-    element.textContent = timeBar.current;
-    element.style.color = '';
+    const minutes = Math.floor(timeBar.current / 60);
+    const seconds = timeBar.current % 60;
+
+    element.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
     timeBar.statuses.forEach((v, k) => {
         if (k(timeBar.current)) {
