@@ -35,28 +35,60 @@
 		</thead>
 		<tbody>
 			<tr>
+				<td colspan="5">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
+								</td>
+								<td rowspan="5">
+									<div id="maintable">
+										<div id="board"></div>
+										<div id="scoreboard">
+											<div class="title">
+												<input type="button" name="Button" id="btnClose" value="" onclick="closeHighscore()">
+												<div id="lblHighscore">HIGHSCORE</div>
+											</div>
+											<div id="list">
+											</div>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="button" name="Button" id="btnChangeSound" class="soundOn" value="" onclick="changeSound()">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			
+
+			<tr>
 				<td>
 					<div id="actionButtons">
-						<input type="button" name="Button" id="btnNewGame" value="" onclick="replay()">
-						<input type="button" name="Button" id="btnAddLife" value="" onclick="addMoreLives()">
-						<input type="button" name="Button" id="btnChange" value="" onclick="repairGame()">
-						<input type="button" name="Button" id="btnHighscore" value="" onclick="showHighscore()">
-						<input type="button" name="Button" id="btnChangeSound" class="soundOn" value=""
-							onclick="changeSound()">
 					</div>
 				</td>
 				<td colspan="4" class="w-100">
-					<div id="maintable">
-						<div id="board"></div>
-						<div id="scoreboard">
-							<div class="title">
-								<input type="button" name="Button" id="btnClose" value="" onclick="closeHighscore()">
-								<div id="lblHighscore">HIGHSCORE</div>
-							</div>
-							<div id="list">
-							</div>
-						</div>
-					</div>
+					
 				</td>
 			</tr>
 		</tbody>
