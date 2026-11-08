@@ -29,7 +29,6 @@ body {
     width: 100%;
     height: 40px;
     font-size: medium;
-    font-weight: bold;
     font-family: Roboto, Helvetica, Arial;
     color: #fff;
     overflow: hidden;
@@ -41,6 +40,10 @@ body {
     width: 1px;
     height: 100%;
     background: url("../img/separator.png") repeat-x;
+}
+
+.header #time {
+    font-size: x-large;
 }
 
 .menu-buttons {
