@@ -88,12 +88,10 @@ body {
 }
 
 #btnHighscore {
-    float: right !important;
     background: url(../img/highscore.png) no-repeat 0 0;
 }
 
 #btnChangeSound {
-    float: right !important;
     background: url(../img/btnsound_off.png) no-repeat 0 0;
 }
 
