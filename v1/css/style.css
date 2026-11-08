@@ -36,11 +36,6 @@ body {
     background: url(../img/bar_bg.png) repeat-x;
 }
 
-.header div {
-    float: left;
-    padding: 8px;
-}
-
 .header .separator {
     padding: 0px;
     width: 1px;
