@@ -167,7 +167,7 @@ function onGameLoaded() {
 
     timeBar.current = timeBar.maximum;
 
-    document.getElementById("time").textContent = timeBar.current;
+    displayTimeLeft();
 
     timeID = setInterval("decTime()", 1000);
 }
@@ -177,7 +177,7 @@ function decTime() {
 
     timeBar.current--;
 
-    document.getElementById("time").textContent = timeBar.current;
+    displayTimeLeft();
 
     if (timeBar.current == 0) {
         alert(getString('txt_gameover', lang));
@@ -185,7 +185,9 @@ function decTime() {
     }
 }
 
-
+function displayTimeLeft() {
+    document.getElementById("time").textContent = timeBar.current;
+}
 
 function rewardLife() {
     _board.addLife();
