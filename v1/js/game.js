@@ -162,15 +162,15 @@ function onGameLoaded() {
     if (timeID > 0) clearInterval(timeID);
     elTimebar.tmp = maxTime;
     elTimebar.textContent = maxTime;
-    elTimebar.style.width = maxTime / 2 + "px";
-    timeID = setInterval("decTime()", 1250);
+    elTimebar.style.width = `${((elTimebar.tmp * 100) / maxTime)}%`;
+    timeID = setInterval("decTime()", 1000);
 }
 
 function decTime() {
     if (paused) return;
     elTimebar.tmp--;
     elTimebar.textContent = elTimebar.tmp;
-    elTimebar.style.width = elTimebar.tmp / 2 + "px";
+    elTimebar.style.width = `${((elTimebar.tmp * 100) / maxTime)}%`;
     if (elTimebar.tmp == 0) {
         alert(getString('txt_gameover', lang));
         replay();
