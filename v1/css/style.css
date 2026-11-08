@@ -48,15 +48,11 @@ body {
     background: url("../img/separator.png") repeat-x;
 }
 
-#actionButtons {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
+.menu-buttons {
     background: url(../img/bar_bg.png) repeat;
 }
 
-.menu-button {
+.menu-buttons .menu-button {
     float: left;
     margin: 8px;
     padding: 0px;
