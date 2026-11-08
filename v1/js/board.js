@@ -259,7 +259,7 @@ function onPiecePaired() {
 
     // check win
     if (_board.currentGame.score == winScore) {
-        _board.currentGame.totalScore += _board.currentGame.score + elTimebar.tmp;
+        _board.currentGame.totalScore += _board.currentGame.score + timeBar.current;
         if (_board.currentGame.level == maxLevel) {
             var player = prompt("You win. Please enter your name", "");
             if (player != null) {

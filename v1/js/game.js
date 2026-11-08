@@ -2,8 +2,6 @@ var _board;
 var checksound = false;
 var timeID = 0;
 var scrollID = 0;
-var maxTime = 480;
-var elTimebar = document.getElementById("timebar");
 var PieceWidth = 42;
 var PieceHeight = 52;
 var cols = 16;
@@ -37,6 +35,11 @@ var gameModes = {
         level: 1,
         lives: 40,
     },
+};
+
+var timeBar = {
+    current: 0,
+    maximum: 480,
 };
 
 function init() {
@@ -160,18 +163,23 @@ function scrolllist() {
 function onGameLoaded() {
     playAudio(SOUND.GameLoaded);
     if (timeID > 0) clearInterval(timeID);
-    elTimebar.tmp = maxTime;
-    elTimebar.textContent = elTimebar.tmp;
-    elTimebar.style.width = `${((elTimebar.tmp * 100) / maxTime)}%`;
+    timeBar.current = timeBar.maximum;
+
+    const elTimebar = document.getElementById("timebar");
+    elTimebar.textContent = timeBar.current;
+    elTimebar.style.width = `${((timeBar.current * 100) / timeBar.maximum)}%`;
     timeID = setInterval("decTime()", 1000);
 }
 
 function decTime() {
     if (paused) return;
-    elTimebar.tmp--;
-    elTimebar.textContent = elTimebar.tmp;
-    elTimebar.style.width = `${((elTimebar.tmp * 100) / maxTime)}%`;
-    if (elTimebar.tmp == 0) {
+    timeBar.current--;
+
+    const elTimebar = document.getElementById("timebar");
+    elTimebar.textContent = timeBar.current;
+    elTimebar.style.width = `${((timeBar.current * 100) / timeBar.maximum)}%`;
+
+    if (timeBar.current == 0) {
         alert(getString('txt_gameover', lang));
         replay();
     }
