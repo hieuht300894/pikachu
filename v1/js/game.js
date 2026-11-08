@@ -165,9 +165,12 @@ function onGameLoaded() {
     if (timeID > 0) clearInterval(timeID);
     timeBar.current = timeBar.maximum;
 
+    const elTimebarText = document.getElementById("timebarText");
+    elTimebarText.textContent = timeBar.current;
+
     const elTimebar = document.getElementById("timebar");
-    elTimebar.textContent = timeBar.current;
     elTimebar.style.width = `${((timeBar.current * 100) / timeBar.maximum)}%`;
+
     timeID = setInterval("decTime()", 1000);
 }
 
@@ -175,8 +178,10 @@ function decTime() {
     if (paused) return;
     timeBar.current--;
 
+    const elTimebarText = document.getElementById("timebarText");
+    elTimebarText.textContent = timeBar.current;
+
     const elTimebar = document.getElementById("timebar");
-    elTimebar.textContent = timeBar.current;
     elTimebar.style.width = `${((timeBar.current * 100) / timeBar.maximum)}%`;
 
     if (timeBar.current == 0) {
