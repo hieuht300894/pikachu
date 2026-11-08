@@ -25,7 +25,7 @@ body {
     overflow: auto;
 }
 
-#header {
+.header {
     width: 100%;
     height: 40px;
     font-size: medium;
@@ -36,12 +36,12 @@ body {
     background: url(../img/bar_bg.png) repeat-x;
 }
 
-#header div {
+.header div {
     float: left;
     padding: 8px;
 }
 
-#header .separator {
+.header .separator {
     padding: 0px;
     width: 1px;
     height: 100%;
