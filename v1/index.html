@@ -13,19 +13,23 @@
 <body onload="onLoad()">
 	<table class="w-100">
 		<thead>
-			<tr>
-				<th colspan="2">
-					<!-- Main header container set to flex row -->
-					<div id="header">
-						<!-- GAME STATS ONLY: The rest of the elements are kept as they were -->
-						<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
-						<div><span id="lblLevel">Progress</span>:&nbsp;<span id="txtLevel"></span></div>
-						<div id="time">
-							<div id="timebar"></div>
-						</div>
-						<div><span id="lblScore">Score</span>:&nbsp;<span id="txtScore"></span></div>
-						<div><span id="lblLives">Lives</span>:&nbsp;<span id="txtLives"></span>&nbsp;</div>
+			<tr id="header">
+				<th style="width: 25%;">
+					<div><span id="lblGameMode">Mode</span>:&nbsp;<span id="txtGameMode"></span></div>
+				</th>
+				<th style="width: 25%;">
+					<div><span id="lblLevel">Progress</span>:&nbsp;<span id="txtLevel"></span></div>
+				</th>
+				<th style="width: 240px;">
+					<div id="time">
+						<div id="timebar"></div>
 					</div>
+				</th>
+				<th style="width: 25%;">
+					<div><span id="lblScore">Score</span>:&nbsp;<span id="txtScore"></span></div>
+				</th>
+				<th style="width: 25%;">
+					<div><span id="lblLives">Lives</span>:&nbsp;<span id="txtLives"></span>&nbsp;</div>
 				</th>
 			</tr>
 		</thead>
@@ -43,7 +47,7 @@
 					</div>
 				</td>
 				<!-- Stretches to fill everything else -->
-				<td class="w-100">
+				<td colspan="4" class="w-100">
 					<div id="maintable">
 						<div id="board"></div>
 						<div id="scoreboard">
