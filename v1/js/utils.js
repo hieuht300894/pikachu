@@ -39,12 +39,16 @@ function changeSound(status) {
         checksound = !checksound;
     }
 
-    if (checksound) {
-        document.getElementById("btnChangeSound").setAttribute("class", "soundOn");
-    }
-    else {
-        document.getElementById("btnChangeSound").setAttribute("class", "soundOff");
-    }
+    const statuses = new Map([
+        [true, 'soundOn'],
+        [false, 'soundOff'],
+    ]);
+
+    Array.from(statuses.values()).forEach(x => {
+        document.getElementById("btnChangeSound").classList.remove(x);
+    });
+
+    document.getElementById("btnChangeSound").classList.add(statuses.get(checksound));
 }
 
 function repaint(id, value) {

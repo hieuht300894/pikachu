@@ -56,7 +56,7 @@ body {
     background: url(../img/bar_bg.png) repeat;
 }
 
-#actionButtons input {
+.menu-button {
     float: left;
     margin: 8px;
     padding: 0px;
