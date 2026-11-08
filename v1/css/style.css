@@ -147,7 +147,8 @@ body {
 #timebar {
     margin: 0px !important;
     padding: 0px !important;
-    background: url(../img/timebar.png) repeat-y;
+    background: url(../img/timebar.png);
+    background-size: contain;
     display: flex;
     justify-content: center;
     /* Aligns horizontally */
