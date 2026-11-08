@@ -40,6 +40,12 @@ var gameModes = {
 var timeBar = {
     current: 0,
     maximum: 480,
+    statuses: new Map([
+        [(x) => x > 360 && x <= 480, '#53ff61'],
+        [(x) => x > 210 && x <= 360, '#fff15b'],
+        [(x) => x > 60 && x <= 210, '#faad3b '],
+        [(x) => x > 0 && x <= 60, '#ff2444'],
+    ]),
 };
 
 function init() {
@@ -186,7 +192,16 @@ function decTime() {
 }
 
 function displayTimeLeft() {
-    document.getElementById("time").textContent = timeBar.current;
+    const element = document.getElementById("time");
+
+    element.textContent = timeBar.current;
+    element.style.color = '';
+
+    timeBar.statuses.forEach((v, k) => {
+        if (k(timeBar.current)) {
+            element.style.color = v;
+        }
+    });
 }
 
 function rewardLife() {
